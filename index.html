@@ -107,6 +107,9 @@
         .section-content:hover {
             transform: scale(1.02);
         }
+        .section-content.no-modal:hover {
+            transform: none;
+        }
         .resume-section .list-item {
             display: flex;
             margin-bottom: 0.5rem;
@@ -340,6 +343,25 @@
             background: #3b82f6;
             color: white;
         }
+
+        .resume-content {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+        body.light-mode .resume-content {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .resume-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
@@ -352,7 +374,7 @@
             <div class="flex space-x-8 items-center">
                 <a href="#" class="nav-link" data-tab="home">Home</a>
                 <a href="#" class="nav-link" data-tab="about">About</a>
-                <a href="#" class="nav-link" data-tab="resume">Tutor Resume</a>
+                <a href="#" class="nav-link" data-tab="resume">Tutor Resumes</a>
                 <a href="#" class="nav-link" data-tab="pricing">Pricing</a>
                 <a href="#" class="nav-link" data-tab="contact">Contact Us</a>
                 <button id="mode-toggle" class="nav-link focus:outline-none">
@@ -401,38 +423,141 @@
             </footer>
         </section>
 
-        <!-- Tutor Resume Section -->
+        <!-- Tutor Resumes Section -->
         <section id="resume" class="content-section flex items-center justify-center">
-            <div class="section-content w-full resume-section">
-                <h2 class="section-title text-gray-100">Tutor Resume</h2>
-                <div class="text-lg text-gray-300">
-                    <p class="font-bold text-xl mb-4">Adi Kamath</p>
-                    <hr class="my-4 border-gray-700" />
-                    <p class="font-bold text-lg mb-2">Extracurricular Skills:</p>
-                    <ul class="list-disc list-inside space-y-2 pl-4">
-                        <li>Experienced piano player (classes for 5 years)</li>
-                        <li>Intermediate chess player (5 years)</li>
-                        <li>Advanced basketball player (4 years)</li>
-                        <li>Semester-long course on Engineering and Design Modeling, passed with 95/100 and certification, with proficient understanding of LdCAD, and Whitebox</li>
-                        <li>Semester-long course on Media Production, passed with a 98/100 and certification, with proficient understanding of Adobe Photoshop, Adobe After Effects, WeVideo and Capcut</li>
-                        <li>Owns a growing and successful YouTube channel with 600+ subscribers.</li>
-                    </ul>
-                    <hr class="my-4 border-gray-700" />
-                    <p class="font-bold text-lg mb-2">Academic Skills:</p>
-                    <ul class="list-disc list-inside space-y-2 pl-4">
-                        <li>4.0 GPA overall</li>
-                        <li>A+ Grade in Algebra, Geometry, Geology, English/Vocab, American History, Computer Science, and Chemistry (All at 8th grade or below level).</li>
-                    </ul>
-                    <hr class="my-4 border-gray-700" />
-                    <p class="font-bold text-lg mb-2">Availability:</p>
-                    <p>Free for most timings, can have some issues if colliding with personal classes.</p>
-                    <hr class="my-4 border-gray-700" />
-                    <p class="font-bold text-lg mb-2">Restrictions:</p>
-                    <ul class="list-disc list-inside space-y-2 pl-4">
-                        <li><strong>Age:</strong> Only able to do tutor people 13 and under</li>
-                        <li><strong>Location:</strong> Only able to do jobs in surrounding area</li>
-                        <li><strong>Language:</strong> Only proficiently speaks two languages (American English and Konkani)</li>
-                    </ul>
+            <div id="resume-section-content" class="section-content w-full resume-section no-modal">
+                <h2 class="section-title text-gray-100">Tutor Resumes</h2>
+                
+                <!-- Dropdown Menu -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+                    <label for="tutor-select" class="text-lg font-medium text-gray-300">Select a tutor:</label>
+                    <select id="tutor-select" onchange="showResume()" class="py-2 px-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-100">
+                        <option value="" selected disabled>-- Choose a Tutor --</option>
+                        <option value="adi">Adi Kamath (Head Tutor)</option>
+                        <option value="sandeep">Sandeep Kurma Tutor</option>
+                        <option value="krishna">Krishna Natarajan Tutor</option>
+                    </select>
+                </div>
+                
+                <!-- Resume Containers -->
+                <div id="resume-container">
+                    <!-- Adi Kamath (Head Tutor) Resume -->
+                    <div id="resume-adi" class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200">
+                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Adi Kamath (Head Tutor)</h2>
+                        <div class="text-lg text-gray-300">
+                            <hr class="my-4 border-gray-700" />
+                            <p class="font-bold text-lg mb-2">Extracurricular Skills:</p>
+                            <ul class="list-disc list-inside space-y-2 pl-4">
+                                <li>Experienced piano player (classes for 5 years)</li>
+                                <li>Intermediate chess player (5 years)</li>
+                                <li>Advanced basketball player (4 years)</li>
+                                <li>Semester-long course on Engineering and Design Modeling, passed with 95/100 and certification, with proficient understanding of LdCAD, and Whitebox</li>
+                                <li>Semester-long course on Media Production, passed with a 98/100 and certification, with proficient understanding of Adobe Photoshop, Adobe After Effects, WeVideo and Capcut</li>
+                                <li>Owns a growing and successful YouTube channel with 600+ subscribers.</li>
+                            </ul>
+                            <hr class="my-4 border-gray-700" />
+                            <p class="font-bold text-lg mb-2">Academic Skills:</p>
+                            <ul class="list-disc list-inside space-y-2 pl-4">
+                                <li>4.0 GPA overall</li>
+                                <li>A+ Grade in Algebra, Geometry, Geology, English/Vocab, American History, Computer Science, and Chemistry (All at 8th grade or below level).</li>
+                            </ul>
+                            <hr class="my-4 border-gray-700" />
+                            <p class="font-bold text-lg mb-2">Availability:</p>
+                            <p>Free for most timings, can have some issues if colliding with personal classes.</p>
+                            <hr class="my-4 border-gray-700" />
+                            <p class="font-bold text-lg mb-2">Restrictions:</p>
+                            <ul class="list-disc list-inside space-y-2 pl-4">
+                                <li><strong>Age:</strong> Only able to do tutor people 13 and under</li>
+                                <li><strong>Location:</strong> Only able to do jobs in surrounding area</li>
+                                <li><strong>Language:</strong> Only proficiently speaks two languages (American English and Konkani)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Sandeep Kurma Resume -->
+                    <div id="resume-sandeep" class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200">
+                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Sandeep Kurma</h2>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>3.98 GPA overall, with A grades in Algebra, Geometry, Geology, English/Vocabulary, American History, Computer Science, and Chemistry (all 8th grade or below)</li>
+                                <li>Communication and critical thinking skills developed through tutoring and group projects</li>
+                                <li>Able to break down complex subjects into easy-to-understand lessons</li>
+                                <li>Helps students set goals and master study techniques</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>Practical problem-solving in graph theory, quadratic equations, and coordinate geometry</li>
+                                <li>Prepared answer keys and quizzes for peers, focusing on exam practice</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>Free most days and times</li>
+                                <li>Can tutor students 13 and under</li>
+                                <li>Willing to tutor in the surrounding local area</li>
+                                <li>English only</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Krishna Natarajan Resume -->
+                    <div id="resume-krishna" class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200">
+                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Krishna Natarajan</h2>
+                        <div class="mb-4 text-gray-300">
+                            <p>Age: 12 years</p>
+                            <p>7th grader at Evergreen Middle School</p>
+                            <p>Motivated and well-rounded student with strong academic performance and diverse extracurricular achievements in music, robotics, athletics, and language studies.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+                            <p class="text-gray-300">I want to help students in the community not only excel academically but also enjoy learning.</p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>QUEST (gifted) program student at Evergreen Middle School</li>
+                                <li>4.0 GPA overall</li>
+                                <li>Won short story competitions organized by Future Scholar</li>
+                                <li>Placed on the podium at Math is Cool competitions</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>Four years of hands-on robotics experience, advanced to state level in VEX IQ Robotics</li>
+                                <li>Intermediate Carnatic violist (3 1/2 years)</li>
+                                <li>Western cello player and pianist (3 years each)</li>
+                                <li>Active hockey player (competitive experience)</li>
+                                <li>Brown belt in Taekwondo</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>Generally available after school and weekends; may have scheduling conflicts with personal classes</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-300">
+                                <li>Age: Tutoring ages 12 and under recommended</li>
+                                <li>Location: Available for opportunities within the local area</li>
+                                <li>Language: Proficient in American English; can understand well but only somewhat speak Tamil</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="footer">
@@ -647,6 +772,9 @@
 
         sectionContents.forEach(content => {
             content.addEventListener('click', function(e) {
+                if (this.classList.contains('no-modal')) {
+                    return;
+                }
                 e.stopPropagation();
                 const clonedContent = this.cloneNode(true);
                 clonedContent.classList.remove('cursor-pointer', 'hover:scale-102');
@@ -1077,6 +1205,27 @@
             quizModal.style.display = 'none';
         }
 
+        // --- Resume Dropdown Logic ---
+        function showResume() {
+            const selectElement = document.getElementById('tutor-select');
+            const selectedValue = selectElement.value;
+            const resumeContainers = document.querySelectorAll('.resume-content');
+            
+            // Hide all resume containers
+            resumeContainers.forEach(container => {
+                container.classList.add('hidden');
+                container.classList.remove('active');
+            });
+
+            // Show the selected resume container if a value is chosen
+            if (selectedValue) {
+                const selectedResume = document.getElementById(`resume-${selectedValue}`);
+                if (selectedResume) {
+                    selectedResume.classList.remove('hidden');
+                    selectedResume.classList.add('active');
+                }
+            }
+        }
     </script>
 </body>
 </html>
