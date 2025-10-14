@@ -1292,9 +1292,10 @@
             }
         }
     </script>
-    <!-- 👇 Human Verification Gate starts here -->
-<div id="verify-gate">
+ <div id="verify-gate">
   <div class="verify-box">
+    <h1 class="verify-title">We want to preserve what’s human.</h1>
+    <div class="verify-divider"></div>
     <h2>Verifying you are human</h2>
     <label class="check-container">
       <input type="checkbox" id="human-check">
@@ -1305,45 +1306,92 @@
 </div>
 
 <style>
-  /* Gate styling */
+  /* Background animation */
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   #verify-gate {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #0a0f24, #1a2a4d);
+    background: linear-gradient(-45deg, #0a0f24, #142850, #233b6e, #1b2845);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
     transition: opacity 1s ease;
   }
+
   .verify-box {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    backdrop-filter: blur(16px);
+    border-radius: 22px;
+    padding: 50px 60px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
     text-align: center;
     color: white;
-    font-family: "Segoe UI", sans-serif;
+    font-family: "Segoe UI", "Inter", sans-serif;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: fadeInBox 1.5s ease;
   }
+
+  @keyframes fadeInBox {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .verify-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+  }
+
+  .verify-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin-bottom: 25px;
+  }
+
   .check-container {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 25px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
   }
+
+  .check-container:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.02);
+  }
+
   input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
+    accent-color: #00aaff;
   }
+
   .label-text {
     font-size: 18px;
   }
+
   body.verified #verify-gate {
     opacity: 0;
     pointer-events: none;
@@ -1367,9 +1415,9 @@
     });
   });
 </script>
-<!-- 👆 Human Verification Gate ends here -->
 </body>
 </html>
+
 
 
 
