@@ -1292,8 +1292,85 @@
             }
         }
     </script>
+    <!-- 👇 Human Verification Gate starts here -->
+<div id="verify-gate">
+  <div class="verify-box">
+    <h2>Verifying you are human</h2>
+    <label class="check-container">
+      <input type="checkbox" id="human-check">
+      <span class="checkmark"></span>
+      <span class="label-text">I am human</span>
+    </label>
+  </div>
+</div>
+
+<style>
+  /* Gate styling */
+  #verify-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #0a0f24, #1a2a4d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+  }
+  .verify-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+    text-align: center;
+    color: white;
+    font-family: "Segoe UI", sans-serif;
+  }
+  .check-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  input[type="checkbox"] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  .label-text {
+    font-size: 18px;
+  }
+  body.verified #verify-gate {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  // Hide site until verified
+  document.addEventListener("DOMContentLoaded", () => {
+    const gate = document.getElementById("verify-gate");
+    const checkbox = document.getElementById("human-check");
+    document.body.style.overflow = "hidden";
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        document.body.classList.add("verified");
+        setTimeout(() => {
+          gate.remove();
+          document.body.style.overflow = "auto";
+        }, 1000);
+      }
+    });
+  });
+</script>
+<!-- 👆 Human Verification Gate ends here -->
 </body>
 </html>
+
 
 
 
