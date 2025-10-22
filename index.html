@@ -362,6 +362,68 @@
         .resume-content.active {
             display: block;
         }
+    
+/* --- Verified Tutor Checkmark --- */
+.checkmark {
+  color: #22c55e;
+  font-weight: bold;
+  margin-left: 6px;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkmark::after {
+  content: "verified excellence tutor";
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.checkmark:hover::after {
+  opacity: 1;
+}
+
+/* --- Checkmark Info Popup --- */
+#checkmarkPopup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+
+#checkmarkPopup .popup-content {
+  background: #fff;
+  color: #000;
+  max-width: 550px;
+  margin: 10% auto;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#checkmarkPopup .close-btn {
+  color: #333;
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+#checkmarkPopup .close-btn:hover {
+  color: red;
+}
+
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
@@ -439,8 +501,20 @@
                         <option value="vivaan">Vivaan Sharma Tutor</option>
                         <option value="kush">Kush Billa Tutor</option>
                         <option value="vihan">Vihan Lekkala Tutor</option>
-                        <option value= "sesha">Sesha Shreeram Tutor</option>
+                        <option value="sesha">Sesha Shreeram Tutor</option>
                     </select>
+                    <script>
+                        document.querySelectorAll('#tutor-select option').forEach(opt => {
+                        if (opt.textContent.includes('✔')) {
+                        const span = document.createElement('span');
+                        span.className = 'checkmark';
+                        span.textContent = '✔';
+                        span.onclick = openCheckmarkPopup;
+                          }
+                            });
+                    </script>
+
+
                 </div>
                 
                 <!-- Resume Containers -->
@@ -1585,6 +1659,7 @@
 </script>
 </body>
 </html>
+
 
 
 
