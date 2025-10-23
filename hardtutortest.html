@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Qualification Bar Exam</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind and enforce the Deep Blue/White theme for high contrast -->
+    <style>
+        /* CSS Variables defining the Deep Blue/White High-Contrast Theme */
+        :root {
+            /* Default Mode (Deep Navy Base) */
+            --bg-color: #0f172a; /* Very Deep Blue/Navy */
+            --card-bg: #1e293b; /* Slightly lighter Card Background */
+            --text-color: #f8fafc; /* Pure White/Near-White Text */
+            --subtle-text: #94a3b8; /* Light gray for secondary text */
+            --accent-color: #3b82f6; /* Vibrant Blue for buttons/active states */
+            --accent-color-hover: #60a5fa; /* Lighter blue for hover */
+            --accent-text: #0f172a; /* Dark text for light accent buttons */
+        }
+        .dark {
+            /* Dark Mode Toggle (Even Deeper Blue Variant) */
+            --bg-color: #0c1220; /* Slightly darker base */
+            --card-bg: #1f2937; /* Even deeper blue card */
+            --text-color: #f1f5f9; /* Near white text */
+            --subtle-text: #94a3b8;
+            --accent-color: #7dd3fc; /* Sky Blue for highlights */
+            --accent-color-hover: #38bdf8;
+            --accent-text: #0f172a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .card {
+            background-color: var(--card-bg);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* Styling for Option Labels and Radio Buttons */
+        .card label {
+            color: var(--text-color);
+            background-color: var(--bg-color); /* Base background for unselected options */
+            border: 1px solid var(--subtle-text); /* Light border for definition */
+            font-weight: 500;
+        }
+        .card label:hover {
+            background-color: rgba(59, 130, 246, 0.2); /* Light blue hover effect */
+        }
+        input[type="radio"]:checked + label {
+            background-color: var(--accent-color); /* Highlight color when selected */
+            color: var(--accent-text); /* Dark text on light accent background */
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+            font-weight: 700;
+        }
+
+        /* Generic Button Style using variables */
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--accent-text);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--accent-color-hover);
+        }
+        .btn-red {
+            background-color: #ef4444; /* Red 500 */
+            color: white;
+        }
+        .btn-red:hover:not(:disabled) {
+            background-color: #dc2626; /* Red 600 */
+        }
+        .btn-disabled {
+            background-color: var(--card-bg);
+            color: var(--subtle-text);
+            cursor: not-allowed;
+        }
+        .text-accent {
+             color: var(--accent-color);
+        }
+    </style>
+    <!-- Load Lucide Icons for the moon/sun toggle -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<div id="app" class="min-h-screen flex items-center justify-center p-4 relative">
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" class="absolute top-4 right-4 p-2 rounded-full shadow-lg transition duration-300 card hover:ring-2 hover:ring-sky-500">
+        <span id="sunIcon" style="display: none;"><i data-lucide="sun" class="w-6 h-6 text-yellow-300"></i></span>
+        <span id="moonIcon"><i data-lucide="moon" class="w-6 h-6 text-sky-400"></i></span>
+    </button>
+    <!-- Content will be injected here by JavaScript -->
+</div>
+
+<script>
+    // Constants for the scoring thresholds
+    const TOTAL_QUESTIONS = 30;
+    const QUALIFIED_SCORE = 28; // 28-30
+    const PENDING_SCORE = 25;   // 25-27
+    const FAILED_SCORE = 24;    // 24 or less
+
+    const apiKey = ""; 
+
+    // --- QUESTION DATA (Advanced Math/Science for Bar Exam) ---
+    const questionsData = {
+        '9': [
+            { q: "If $f(x) = 2x - 5$ and $g(x) = x^2 + 3$, what is $f(g(-2))$?", a: "6", options: ["11", "9", "6", "3", "7"] },
+            { q: "Solve for $x$: $4^{x-1} = 64$.", a: "4", options: ["3", "5", "4", "2", "6"] },
+            { q: "A quadratic equation has roots at $x=3$ and $x=-1$. What is the equation in the form $x^2 + bx + c = 0$?", a: "$x^2 - 2x - 3 = 0$", options: ["$x^2 + 2x - 3 = 0$", "$x^2 - 4x + 3 = 0$", "$x^2 - 2x - 3 = 0$", "$x^2 + 4x + 3 = 0$", "$x^2 - 3x - 1 = 0$"] },
+            { q: "What is the slope of the line perpendicular to $y = \\frac{1}{3}x - 5$?", a: "-3", options: ["3", "-1/3", "-3", "1/3", "-5"] },
+            { q: "The sum of a number and its square is 30. What is the positive number?", a: "5", options: ["6", "5", "4", "3", "7"] },
+            { q: "Simplify $\\frac{x^2 - 4}{x + 2}$.", a: "$x - 2$", options: ["$x + 2$", "$x - 2$", "$x^2 - 2$", "2", "Undefined"] },
+            { q: "In a right triangle, legs are 6 cm and 8 cm. What is the length of the hypotenuse?", a: "10 cm", options: ["12 cm", "10 cm", "14 cm", "9 cm", "11 cm"] },
+            { q: "Factor completely: $2x^3 - 8x$.", a: "$2x(x - 2)(x + 2)$", options: ["$2x(x^2 - 4)$", "$2x(x - 4)(x + 4)$", "$2x(x - 2)(x + 2)$", "$2(x^3 - 4x)$", "$x(2x^2 - 8)$"] },
+            { q: "If the area of a circle is $16\\pi$ square units, what is its circumference?", a: "$8\\pi$ units", options: ["$16\\pi$ units", "$4\\pi$ units", "$8\\pi$ units", "$2\\pi$ units", "$32\\pi$ units"] },
+            { q: "A coin is flipped 3 times. What is the probability of getting exactly two heads?", a: "3/8", options: ["1/2", "3/8", "1/4", "5/8", "7/8"] },
+            { q: "Calculate the value of $i^{2025}$.", a: "i", options: ["1", "-1", "i", "-i", "0"] },
+            { q: "What is the domain of $h(x) = \\sqrt{x - 4}$?", a: "$x \\ge 4$", options: ["$x \\le 4$", "$x > 4$", "$x \\ge 4$", "$x \\neq 4$", "All real numbers"] },
+            { q: "If $a^2 + b^2 = 10$ and $ab = 3$, what is $(a+b)^2$?", a: "16", options: ["13", "16", "19", "10", "1"] },
+            { q: "Find the missing term in the arithmetic sequence: 5, 9, __, 17, 21.", a: "13", options: ["12", "13", "14", "11", "15"] },
+            { q: "How many distinct four-digit numbers can be formed using 1, 2, 3, 4 without repetition?", a: "24", options: ["12", "16", "20", "24", "4"] },
+            { q: "Solve the inequality: $3x - 7 > 5$.", a: "$x > 4$", options: ["$x < 4$", "$x > 4$", "$x < 12$", "$x > 12$", "$x = 4$"] },
+            { q: "Volume of a sphere with $r=3$ units (in terms of $\\pi$)", a: "$36\\pi$ cubic units", options: ["$12\\pi$ cubic units", "$36\\pi$ cubic units", "$9\\pi$ cubic units", "$18\\pi$ cubic units", "$27\\pi$ cubic units"] },
+            { q: "Convert $150^{\\circ}$ to radians.", a: "$5\\pi/6$ radians", options: ["$3\\pi/4$ radians", "$5\\pi/6$ radians", "$2\\pi/3$ radians", "$7\\pi/6$ radians", "$11\\pi/12$ radians"] },
+            { q: "Simplify $\\frac{1}{2} + \\frac{1}{3}$.", a: "5/6", options: ["2/5", "5/6", "1/5", "3/6", "5/3"] },
+            { q: "If $5(x+2) = 35$, what is $x$?", a: "5", options: ["4", "5", "6", "7", "8"] },
+            { q: "Distance between (1, 2) and (4, 6)?", a: "5", options: ["7", "6", "5", "8", "4"] },
+            { q: "Population increases by $10\\%$ yearly. Current pop 5000. Pop in 2 years?", a: "6050", options: ["6000", "6050", "5500", "6100", "5600"] },
+            { q: "Simplify: $(\\frac{1}{a})^{-3}$.", a: "$a^3$", options: ["$-a^3$", "$\\frac{1}{a^3}$", "$a^3$", "$a^{-3}$", "$a$"] },
+            { q: "Find the average (mean) of the numbers: 12, 18, 20, 10.", a: "15", options: ["14", "15", "16", "17", "18"] },
+            { q: "What is the next number in the sequence: 1, 4, 9, 16, ...?", a: "25", options: ["20", "25", "36", "30", "24"] },
+            { q: "A 12 ft ladder leans against a wall, reaching 10 ft up. How far is the base of the ladder from the wall? (One decimal place)", a: "6.6 ft", options: ["7.0 ft", "6.6 ft", "6.9 ft", "8.0 ft", "5.5 ft"] },
+            { q: "Two angles are supplementary. One is twice the other. What is the smaller angle?", a: "$60^{\\circ}$", options: ["$90^{\\circ}$", "$45^{\\circ}$", "$60^{\\circ}$", "$30^{\\circ}$", "$120^{\\circ}$"] },
+            { q: "Solve the system: $x+y=5$ and $x-y=1$.", a: "$x=3, y=2$", options: ["$x=2, y=3$", "$x=3, y=2$", "$x=4, y=1$", "$x=1, y=4$", "$x=5, y=0$"] },
+            { q: "Calculate the $10^{th}$ term of $a_n = 3n - 1$.", a: "29", options: ["26", "29", "30", "32", "31"] },
+            { q: "What is the chemical formula for water?", a: "H₂O", options: ["CO₂", "NaCl", "O₂", "H₂SO₄", "H₂O"] }
+        ],
+        '8': [
+            { q: "Solve for $x$: $3(x + 2) - 4 = 14$.", a: "4", options: ["5", "4", "6", "3", "7"] },
+            { q: "A jacket is discounted by $20\\%$. If the original price was $\$60$, what is the new price?", a: "$48", options: ["$40", "$45", "$48", "$50", "$32"] },
+            { q: "Find the value of $x$ in a right triangle where one leg is 5 and the hypotenuse is 13.", a: "12", options: ["10", "12", "14", "15", "8"] },
+            { q: "Difference between $3.4 \\times 10^5$ and $2.1 \\times 10^4$ in standard form?", a: "319000", options: ["321000", "319000", "310000", "331000", "340000"] },
+            { q: "If $x^2 = 144$ and $x > 0$, what is $\\sqrt{2x + 1}$?", a: "5", options: ["4", "6", "5", "7", "3"] },
+            { q: "What is the circumference of a circle with an area of $9\\pi$ square units?", a: "$6\\pi$ units", options: ["$9\\pi$ units", "$3\\pi$ units", "$6\\pi$ units", "$12\\pi$ units", "$18\\pi$ units"] },
+            { q: "If a spinner has 5 equally sized sections labeled 1, 2, 3, 4, 5, what is the probability of landing on an odd number?", a: "3/5", options: ["1/5", "2/5", "3/5", "4/5", "1/2"] },
+            { q: "Simplify the expression: $3x^2y - 5xy + x^2y$.", a: "$4x^2y - 5xy$", options: ["$-2x^2y$", "$4x^2y + 5xy$", "$4x^2y - 5xy$", "$3x^2y - 4xy$", "$5x^2y$"] },
+            { q: "What is the measure of an interior angle of a regular octagon?", a: "$135^{\\circ}$", options: ["$120^{\\circ}$", "$135^{\\circ}$", "$140^{\\circ}$", "$108^{\\circ}$", "$90^{\\circ}$"] },
+            { q: "Find the mean of the data: 5, 8, 10, 12, 15.", a: "10", options: ["9", "10", "11", "12", "8"] },
+            { q: "If the temperature dropped from $2^{\\circ}C$ to $-5^{\\circ}C$, what was the change in temperature?", a: "$7^{\\circ}C$", options: ["$3^{\\circ}C$", "$7^{\\circ}C$", "$5^{\\circ}C$", "$2^{\\circ}C$", "$4^{\\circ}C$"] },
+            { q: "Solve for $y$: $\\frac{y}{4} + 2 = 6$.", a: "16", options: ["8", "12", "16", "24", "20"] },
+            { q: "What is the perimeter of a rectangle with length 10 and width 7?", a: "34", options: ["17", "30", "34", "70", "24"] },
+            { q: "A line passes through (1, 5) and (3, 11). What is its slope?", a: "3", options: ["2", "4", "3", "-2", "1/3"] },
+            { q: "Ratio of boys to girls is 3:5. 24 students total. How many girls?", a: "15", options: ["9", "12", "15", "18", "16"] },
+            { q: "Calculate $5^{-2}$.", a: "1/25", options: ["-25", "1/10", "1/25", "25", "5/2"] },
+            { q: "What is the volume of a rectangular prism with sides 2, 3, and 4?", a: "24", options: ["9", "12", "18", "24", "16"] },
+            { q: "Convert $0.000045$ to scientific notation.", a: "$4.5 \\times 10^{-5}$", options: ["$4.5 \\times 10^5$", "$4.5 \\times 10^{-5}$", "$0.45 \\times 10^{-4}$", "$45 \\times 10^{-6}$", "$4.5 \\times 10^{-4}$"] },
+            { q: "Simplify: $-15 + (-8)$.", a: "-23", options: ["-7", "23", "-23", "7", "-8"] },
+            { q: "Watch gains 5 seconds/hour. How many minutes gained in one day?", a: "2 minutes", options: ["1 minute", "2 minutes", "3 minutes", "4 minutes", "5 minutes"] },
+            { q: "What is the square root of 196?", a: "14", options: ["12", "13", "14", "15", "16"] },
+            { q: "Factor $x^2 - 16$.", a: "$(x - 4)(x + 4)$", options: ["$(x - 8)(x + 8)$", "$x(x - 16)$", "$(x - 4)(x + 4)$", "$(x - 4)^2$", "$(x^2 - 4)$"] },
+            { q: "Tank holds 50 gallons and is $80\\%$ full. How many gallons are in it?", a: "40 gallons", options: ["10 gallons", "20 gallons", "30 gallons", "40 gallons", "50 gallons"] },
+            { q: "What is the greatest common divisor of 36 and 48?", a: "12", options: ["6", "12", "8", "4", "18"] },
+            { q: "Area of a trapezoid with height $h$ and bases $b_1$ and $b_2$?", a: "$A = \\frac{1}{2}(b_1 + b_2)h$", options: ["$A = b_1 h$", "$A = b_1 b_2 h$", "$A = \\frac{1}{2}(b_1 + b_2)h$", "$A = b_1 + b_2 + h$", "$A = b_1 b_2$"] },
+            { q: "How many sides does a heptagon have?", a: "7", options: ["6", "7", "8", "9", "10"] },
+            { q: "Circumference is $10\\pi$. What is its diameter?", a: "10", options: ["5", "10", "20", "$5\\pi$", "$10\\pi$"] },
+            { q: "Hypotenuse of a right triangle with legs 9 and 12.", a: "15", options: ["14", "15", "16", "17", "18"] },
+            { q: "What is the least common multiple of 6 and 8?", a: "24", options: ["12", "24", "48", "36", "16"] },
+            { q: "Simplify: $\\frac{3}{5} - \\frac{1}{10}$.", a: "1/2", options: ["2/5", "1/10", "5/10", "1/2", "4/10"] }
+        ],
+        '7': [
+            { q: "A shirt costs $\$25$. If there is $8\\%$ sales tax, what is the total cost?", a: "$27", options: ["$26.50", "$27", "$25.80", "$28", "$26"] },
+            { q: "Solve for $y$: $\\frac{2}{3}y = 10$.", a: "15", options: ["10", "12", "15", "20", "8"] },
+            { q: "The angle complementary to $40^{\\circ}$ is what?", a: "$50^{\\circ}$", options: ["$140^{\\circ}$", "$50^{\\circ}$", "$60^{\\circ}$", "$90^{\\circ}$", "$45^{\\circ}$"] },
+            { q: "What is the value of $\\frac{3}{4} + \\frac{1}{2} \\times \\frac{1}{3}$?", a: "11/12", options: ["4/9", "5/6", "11/12", "7/12", "1"] },
+            { q: "Car travels 180 miles in 3 hours. Average speed in mph?", a: "60 mph", options: ["50 mph", "60 mph", "45 mph", "55 mph", "70 mph"] },
+            { q: "Convert the fraction $\\frac{7}{8}$ to a decimal.", a: "0.875", options: ["0.75", "0.8", "0.875", "0.9", "0.78"] },
+            { q: "Volume of a cylinder with $r=2$ cm and $h=5$ cm (in terms of $\\pi$)?", a: "$20\\pi$ cubic cm", options: ["$10\\pi$ cubic cm", "$20\\pi$ cubic cm", "$25\\pi$ cubic cm", "$4\\pi$ cubic cm", "$8\\pi$ cubic cm"] },
+            { q: "Simplify the expression: $4(x - 3) + 2x$.", a: "$6x - 12$", options: ["$6x - 3$", "$6x - 12$", "$4x - 12$", "$5x - 7$", "$4x + 9$"] },
+            { q: "A cube has a side length of 4 cm. What is its surface area?", a: "$96$ square cm", options: ["$64$ square cm", "$96$ square cm", "$32$ square cm", "$48$ square cm", "$16$ square cm"] },
+            { q: "If $x = -5$, what is $3x^2 - 10$?", a: "65", options: ["$-85$", "$75$", "$-5$", "$-35$", "65"] },
+            { q: "Ratio of red marbles to blue is 4:1. 20 red marbles. How many blue?", a: "5", options: ["4", "5", "10", "20", "80"] },
+            { q: "Solve: $-12 < x + 5$.", a: "$x > -17$", options: ["$x < -17$", "$x > -17$", "$x < 17$", "$x > -7$", "$x < -7$"] },
+            { q: "What is the median of the set: 2, 4, 1, 5, 8?", a: "4", options: ["2", "4", "5", "8", "3"] },
+            { q: "What is $40\\%$ of 150?", a: "60", options: ["30", "40", "50", "60", "75"] },
+            { q: "Two whole numbers multiply to 36 and their sum is 13. What are the two numbers?", a: "4 and 9", options: ["3 and 12", "4 and 9", "2 and 18", "6 and 6", "1 and 36"] },
+            { q: "Calculate $(-3)^3$.", a: "-27", options: ["9", "-9", "27", "-27", "1"] },
+            { q: "What is the largest prime number less than 50?", a: "47", options: ["49", "47", "43", "41", "46"] },
+            { q: "If $\\angle A$ and $\\angle B$ are supplementary and $\\angle A = 55^{\\circ}$, what is $\\angle B$?", a: "$125^{\\circ}$", options: ["$35^{\\circ}$", "$125^{\\circ}$", "$115^{\\circ}$", "$135^{\\circ}$", "$180^{\\circ}$"] },
+            { q: "Simplify: $5^3 - 4^3$.", a: "61", options: ["1", "9", "61", "125", "64"] },
+            { q: "What is the perimeter of a regular hexagon with side length 5?", a: "30", options: ["25", "30", "35", "40", "20"] },
+            { q: "Train leaves at 8:15 AM, arrives at 10:30 AM. Journey length in minutes?", a: "135 minutes", options: ["120 minutes", "135 minutes", "145 minutes", "150 minutes", "115 minutes"] },
+            { q: "Calculate the area of a triangle with base 10 and height 7.", a: "35", options: ["70", "35", "17", "50", "30"] },
+            { q: "What is the result of $15 \\div 0.5$?", a: "30", options: ["7.5", "15", "30", "1.5", "5"] },
+            { q: "Find the coordinate of the midpoint of the segment connecting (2, 5) and (8, 1).", a: "5, 3", options: ["3, 5", "5, 3", "10, 6", "4, 2", "6, 4"] },
+            { q: "If $P=2l+2w$, and $l=12$, $w=5$, what is $P$?", a: "34", options: ["17", "34", "24", "30", "36"] },
+            { q: "What is the next prime number after 17?", a: "19", options: ["18", "19", "21", "23", "20"] },
+            { q: "A number is increased by $20\\%$ to get 60. What was the original number?", a: "50", options: ["48", "50", "55", "72", "65"] },
+            { q: "What is the product of $-4$ and $1.5$?", a: "-6", options: ["6", "-6", "5.5", "-4.5", "2"] },
+            { q: "Simplify $\\frac{1}{2} - \\frac{1}{5}$.", a: "3/10", options: ["4/10", "1/3", "3/10", "1/7", "1/5"] },
+            { q: "How many meters are in 3.5 kilometers?", a: "3500 meters", options: ["350 meters", "3500 meters", "35000 meters", "3.5 meters", "35 meters"] }
+        ],
+        '6': [
+            { q: "What is the prime factorization of 72?", a: "$2^3 \\times 3^2$", options: ["$8 \\times 9$", "$2 \\times 3 \\times 12$", "$2^3 \\times 3^2$", "$2^2 \\times 3^3$", "$6 \\times 12$"] },
+            { q: "Solve for $z$: $2z + 10 = 36$.", a: "13", options: ["23", "18", "13", "16", "3"] },
+            { q: "Ratio of apples to oranges is 5:2. 14 oranges. How many apples?", a: "35", options: ["28", "35", "7", "40", "14"] },
+            { q: "A rectangle has an area of $48$ sq meters and a width of 6 meters. What is its length?", a: "8 meters", options: ["7 meters", "8 meters", "9 meters", "6 meters", "10 meters"] },
+            { q: "How many ounces are in 3.5 pounds? (1 lb = 16 oz)", a: "56 ounces", options: ["48 ounces", "52 ounces", "56 ounces", "60 ounces", "64 ounces"] },
+            { q: "What is the result of $100 - 2 \\times 5^2$?", a: "50", options: ["100", "50", "98", "4900", "500"] },
+            { q: "Convert $0.625$ to a fraction in simplest form.", a: "5/8", options: ["3/5", "5/8", "1/6", "6/10", "7/8"] },
+            { q: "Find the least common multiple (LCM) of 12 and 18.", a: "36", options: ["6", "18", "36", "72", "24"] },
+            { q: "Tank capacity 500 liters, $30\\%$ full. How many more liters needed to fill it?", a: "350 liters", options: ["150 liters", "300 liters", "350 liters", "450 liters", "250 liters"] },
+            { q: "What is the supplement of an angle measuring $110^{\\circ}$?", a: "$70^{\\circ}$", options: ["$90^{\\circ}$", "$180^{\\circ}$", "$70^{\\circ}$", "$250^{\\circ}$", "$10^{\\circ}$"] },
+            { q: "Calculate the average of 15, 20, 25.", a: "20", options: ["15", "20", "25", "60", "10"] },
+            { q: "What is the perimeter of an equilateral triangle with side length 9?", a: "27", options: ["18", "27", "36", "81", "9"] },
+            { q: "Simplify: $5 + 2 \\times (7 - 4)$.", a: "11", options: ["27", "11", "17", "13", "12"] },
+            { q: "Probability of rolling a number greater than 4 on a standard six-sided die?", a: "1/3", options: ["1/6", "1/2", "1/3", "2/3", "5/6"] },
+            { q: "4 painters take 6 days. How many days for 3 painters?", a: "8 days", options: ["6 days", "7 days", "8 days", "9 days", "10 days"] },
+            { q: "Calculate $3^4$.", a: "81", options: ["12", "27", "64", "81", "9"] },
+            { q: "Round $14.567$ to the nearest tenth.", a: "14.6", options: ["14.5", "15.0", "14.6", "14.57", "14"] },
+            { q: "If $y = 5x - 1$ and $x = 3$, what is $y$?", a: "14", options: ["15", "14", "16", "10", "13"] },
+            { q: "What is the value of $\\frac{1}{4} + \\frac{3}{8}$?", a: "5/8", options: ["4/12", "1/3", "5/8", "1/2", "4/8"] },
+            { q: "How many seconds are in 2 hours?", a: "7200 seconds", options: ["120 seconds", "3600 seconds", "7200 seconds", "1200 seconds", "720 seconds"] },
+            { q: "What is the decimal equivalent of $25\\%$?", a: "0.25", options: ["2.5", "0.25", "0.025", "0.5", "25"] },
+            { q: "Find the product of $-6$ and $-7$.", a: "42", options: ["-42", "42", "-13", "13", "48"] },
+            { q: "What is the greatest common factor (GCF) of 20 and 30?", a: "10", options: ["5", "10", "20", "30", "60"] },
+            { q: "A cube has a volume of $27$ cubic units. What is the length of one side?", a: "3 units", options: ["9 units", "6 units", "3 units", "4 units", "5 units"] },
+            { q: "If a line has a rise of 6 and a run of 2, what is its slope?", a: "3", options: ["1/3", "3", "2", "6", "1"] },
+            { q: "What is the name of a polygon with 9 sides?", a: "Nonagon", options: ["Decagon", "Octagon", "Nonagon", "Heptagon", "Hexagon"] },
+            { q: "Calculate $1.2 \\div 0.3$.", a: "4", options: ["0.4", "4", "3.6", "0.36", "3"] },
+            { q: "What is the complement of $65^{\\circ}$?", a: "$25^{\\circ}$", options: ["$115^{\\circ}$", "$25^{\\circ}$", "$35^{\\circ}$", "$15^{\\circ}$", "$45^{\\circ}$"] },
+            { q: "If $x = 10$, what is $x^2 - 2x + 1$?", a: "81", options: ["121", "100", "81", "90", "79"] },
+            { q: "Simplify: $\\frac{4}{5} \\times \\frac{15}{16}$.", a: "3/4", options: ["60/80", "1/4", "3/4", "19/21", "4/5"] }
+        ]
+    };
+
+    // Global state variables
+    let userName = '';
+    let userGrade = '';
+    let currentQuestions = [];
+    let userAnswers = {}; // Stores {index: "selected_option_value"}
+    let timerInterval = null;
+    let timeRemaining = 30 * 60; // 30 minutes in seconds
+    let currentQuestionIndex = 0;
+
+    const app = document.getElementById('app');
+
+    // --- Utility Functions ---
+
+    function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        // Toggle Lucide icons visibility
+        document.getElementById('sunIcon').style.display = document.documentElement.classList.contains('dark') ? 'inline-block' : 'none';
+        document.getElementById('moonIcon').style.display = document.documentElement.classList.contains('dark') ? 'none' : 'inline-block';
+        // Re-render Lucide icons if needed
+        lucide.createIcons();
+    }
+
+    // Set initial icon based on system preference or default mode
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize icons based on default state
+        toggleDarkMode(); 
+        document.documentElement.classList.remove('dark');
+        toggleDarkMode();
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+    });
+    
+    // Normalize answer for fair checking (removes spaces, '$', '\', and normalizes fraction slashes/case)
+    function normalizeAnswer(answer) {
+        if (!answer) return "";
+        return String(answer).trim().toLowerCase().replace(/[\s\$\\]/g, '').replace(/(\/)/g, '/');
+    }
+
+    // --- Render Functions ---
+
+    function renderWelcomeScreen() {
+        // Clear any lingering timer
+        if (timerInterval) clearInterval(timerInterval);
+
+        app.innerHTML = `
+            <div class="w-full max-w-lg card p-8 md:p-10 rounded-2xl shadow-2xl transition-all duration-300 border border-sky-500/30">
+                <h1 class="text-3xl font-extrabold text-accent mb-6 text-center">Tutor Qualification Bar Exam</h1>
+                <p class="text-subtle-text mb-8 text-center">Please enter your name and select the highest grade level you wish to tutor (Grades 6-9).</p>
+
+                <form id="welcomeForm" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-text-color">Full Name</label>
+                        <input type="text" id="name" required class="mt-1 block w-full px-4 py-2 border border-sky-700/50 rounded-lg shadow-sm focus:ring-accent focus:border-accent bg-bg-color text-text-color transition duration-150">
+                    </div>
+
+                    <div>
+                        <label for="grade" class="block text-sm font-medium text-text-color">Target Grade Level</label>
+                        <select id="grade" required class="mt-1 block w-full px-4 py-2 border border-sky-700/50 card rounded-lg shadow-sm focus:ring-accent focus:border-accent bg-bg-color text-text-color transition duration-150">
+                            <option value="" disabled selected class="bg-card-bg text-subtle-text">Select Grade (6, 7, 8, or 9)</option>
+                            <option value="9" class="bg-card-bg">Grade 9</option>
+                            <option value="8" class="bg-card-bg">Grade 8</option>
+                            <option value="7" class="bg-card-bg">Grade 7</option>
+                            <option value="6" class="bg-card-bg">Grade 6</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 font-semibold rounded-lg shadow-md transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50 btn-primary">
+                        Proceed to Instructions
+                    </button>
+                </form>
+            </div>
+        `;
+
+        document.getElementById('welcomeForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            userName = document.getElementById('name').value.trim();
+            userGrade = document.getElementById('grade').value;
+            if (userName && userGrade) {
+                currentQuestions = questionsData[userGrade];
+                // Reset index and answers for a new test
+                currentQuestionIndex = 0;
+                userAnswers = {};
+                renderInstructionsScreen();
+            }
+        });
+        // Ensure MathJax renders the form content (though unlikely to have LaTeX here)
+        if (window.MathJax) {
+            MathJax.typesetPromise([app]).catch((err) => console.error('MathJax Error:', err));
+        }
+    }
+
+    function renderInstructionsScreen() {
+        app.innerHTML = `
+            <div class="w-full max-w-2xl card p-8 md:p-10 rounded-2xl shadow-2xl transition-all duration-300 border border-sky-500/30">
+                <h2 class="text-3xl font-extrabold text-accent mb-4 text-center">Exam Instructions</h2>
+                <p class="text-subtle-text mb-6 text-center">Welcome, <span class="font-bold text-text-color">${userName}</span>. You are about to begin the advanced Bar Exam for Grade ${userGrade}.</p>
+
+                <div class="space-y-4 text-lg p-6 bg-[var(--bg-color)] border-l-4 border-accent rounded-lg shadow-inner">
+                    <p class="font-bold text-text-color">1. Exam Format: <span class="font-normal text-subtle-text">30 highly advanced Multiple Choice Questions.</span></p>
+                    <p class="font-bold text-text-color">2. Time Limit: <span class="font-normal text-red-400">30 minutes (00:30:00).</span></p>
+                    <p class="font-bold text-text-color">3. Scoring: <span class="font-normal text-subtle-text">Your score will be the number of correct answers upon submission OR when the timer expires.</span></p>
+                    <p class="font-bold text-text-color">4. Allowed Materials: <span class="font-normal text-subtle-text">Paper, pencil, and a basic calculator are permitted.</span></p>
+                    <p class="font-bold text-text-color">5. Start Time: <span class="font-normal">The timer starts **immediately** when you click 'Start Exam'.</span></p>
+                    <p class="text-red-400 font-semibold mt-4">Remember: The questions are intentionally above grade level to test your foundational knowledge for tutoring.</p>
+                </div>
+
+                <button id="startExamButton" class="w-full mt-8 py-3 px-4 font-semibold rounded-lg shadow-xl transition duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-accent focus:ring-opacity-50 btn-primary" style="background-color: #10b981;">
+                    Start Exam Now
+                </button>
+            </div>
+        `;
+
+        document.getElementById('startExamButton').addEventListener('click', renderExamScreen);
+    }
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timeRemaining = 30 * 60; // Reset to 30 minutes
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (!timerDisplay) return;
+
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            if (timeRemaining < 0) timeRemaining = 0;
+
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            
+            const timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timerDisplay.textContent = timeString;
+
+            if (timeRemaining <= 300) { // 5 minutes remaining
+                timerDisplay.classList.remove('text-accent');
+                timerDisplay.classList.add('text-red-400');
+            }
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                handleSubmit(true); // Auto-submit when time is up
+            }
+        }, 1000);
+    }
+
+    function renderExamScreen() {
+        app.innerHTML = `
+            <div class="w-full max-w-4xl card p-6 md:p-8 rounded-2xl shadow-2xl flex flex-col h-[95vh] transition-all duration-300 border border-sky-500/30">
+                <div class="flex flex-col sm:flex-row justify-between items-center border-b pb-4 mb-4 border-sky-700/50">
+                    <h2 class="text-2xl font-bold text-accent mb-2 sm:mb-0">Grade ${userGrade} Bar Exam</h2>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-sm font-semibold text-subtle-text">Time Remaining:</div>
+                        <div id="timerDisplay" class="text-3xl font-extrabold text-accent bg-bg-color px-4 py-2 rounded-xl shadow-inner transition duration-300">30:00</div>
+                    </div>
+                </div>
+
+                <div class="flex-grow overflow-hidden flex flex-col justify-between">
+                    <div id="questionContent" class="py-4 flex-grow overflow-y-auto pr-2">
+                        <!-- Current question and options rendered here -->
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-sky-700/50 flex justify-between items-center">
+                        <button id="prevButton" class="px-5 py-2 text-sm font-semibold rounded-lg transition duration-200 shadow-md transform hover:scale-105">
+                            <i data-lucide="chevron-left" class="w-5 h-5 inline-block mr-1"></i> Previous
+                        </button>
+                        <span class="text-lg font-bold text-accent" id="questionCounter"></span>
+                        <button id="nextButton" class="px-5 py-2 text-sm font-semibold rounded-lg transition duration-200 shadow-md transform hover:scale-105">
+                            Next <i data-lucide="chevron-right" class="w-5 h-5 inline-block ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <button id="submitExamButton" class="w-full mt-4 py-3 px-4 font-semibold rounded-lg shadow-xl transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50 btn-red">
+                        Submit Exam
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Setup event listeners
+        document.getElementById('prevButton').addEventListener('click', () => handleNavigation(-1));
+        document.getElementById('nextButton').addEventListener('click', () => handleNavigation(1));
+        document.getElementById('submitExamButton').addEventListener('click', () => {
+             showModal(
+                "Confirm Submission",
+                "Are you sure you want to submit your exam now? You cannot continue or change answers after submission.",
+                () => handleSubmit(false)
+            );
+        });
+
+        // Initialize and render the first question
+        startTimer();
+        renderQuestion();
+        lucide.createIcons(); // Render lucide icons for buttons
+    }
+
+    function renderQuestion() {
+        const qData = currentQuestions[currentQuestionIndex];
+        const qNum = currentQuestionIndex + 1;
+        const currentAnswer = userAnswers[currentQuestionIndex];
+        
+        const questionHtml = `
+            <div class="p-6 card rounded-xl shadow-lg border border-accent/40">
+                <p class="text-xl font-bold text-text-color mb-4">Q${qNum}. ${qData.q}</p>
+                <div class="space-y-3">
+                    ${qData.options.map((option, i) => {
+                        const optionId = `q${qNum}-option${i}`;
+                        const isChecked = currentAnswer === option;
+                        return `
+                            <div class="flex items-center">
+                                <input type="radio" 
+                                       id="${optionId}" 
+                                       name="q${qNum}" 
+                                       value="${option}"
+                                       ${isChecked ? 'checked' : ''}
+                                       onchange="handleAnswerSelect(${currentQuestionIndex}, this.value)"
+                                       class="hidden peer">
+                                <label for="${optionId}" 
+                                       class="w-full p-3 rounded-lg cursor-pointer select-none transition duration-150 hover:bg-opacity-20 peer-checked:bg-opacity-100">
+                                    ${option}
+                                </label>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('questionContent').innerHTML = questionHtml;
+        document.getElementById('questionCounter').textContent = `Question ${qNum} of ${TOTAL_QUESTIONS}`;
+
+        // Update navigation buttons state
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const submitButton = document.getElementById('submitExamButton');
+
+        // Apply shared classes
+        prevButton.classList.remove('btn-primary', 'btn-disabled');
+        nextButton.classList.remove('btn-primary', 'btn-disabled');
+
+        // Logic for Previous button
+        if (currentQuestionIndex === 0) {
+            prevButton.disabled = true;
+            prevButton.classList.add('btn-disabled');
+        } else {
+            prevButton.disabled = false;
+            prevButton.classList.add('btn-primary');
+        }
+
+        // Logic for Next button
+        if (currentQuestionIndex === TOTAL_QUESTIONS - 1) {
+            nextButton.disabled = true;
+            nextButton.classList.add('btn-disabled');
+        } else {
+            nextButton.disabled = false;
+            nextButton.classList.add('btn-primary');
+        }
+        
+        // Only show Submit button on the last question
+        submitButton.style.display = currentQuestionIndex === TOTAL_QUESTIONS - 1 ? 'block' : 'none';
+
+
+        // Initialize MathJax for rendering LaTeX after content is added
+        if (window.MathJax) {
+            MathJax.typesetPromise([document.getElementById('questionContent')]).catch((err) => console.error('MathJax Error:', err));
+        }
+        lucide.createIcons();
+    }
+
+    function handleAnswerSelect(index, selectedAnswer) {
+        userAnswers[index] = selectedAnswer;
+    }
+
+    function handleNavigation(direction) {
+        let newIndex = currentQuestionIndex + direction;
+
+        if (newIndex >= 0 && newIndex < TOTAL_QUESTIONS) {
+            currentQuestionIndex = newIndex;
+            renderQuestion();
+        }
+    }
+
+    function calculateScore() {
+        let score = 0;
+        currentQuestions.forEach((q, index) => {
+            const userAnswer = normalizeAnswer(userAnswers[index]);
+            const correctAnswer = normalizeAnswer(q.a);
+            
+            if (userAnswer === correctAnswer) {
+                score++;
+            }
+        });
+        return score;
+    }
+
+    function handleSubmit(isTimedOut) {
+        if (timerInterval) clearInterval(timerInterval);
+
+        const finalScore = calculateScore();
+        const scorePct = ((finalScore / TOTAL_QUESTIONS) * 100).toFixed(1);
+        
+        let headerText, bodyText, bgColor, headerColor;
+
+        if (finalScore >= QUALIFIED_SCORE) {
+            headerText = "Congratulations! You've Qualified!";
+            bodyText = `Your score of <span class="font-extrabold text-[#10b981]">${finalScore}/${TOTAL_QUESTIONS} (${scorePct}%)</span> is truly outstanding! You have met the highest qualification level. Please take a screenshot of this entire page and send it to the Head Tutor immediately for final approval.`;
+            bgColor = 'bg-green-600/20';
+            headerColor = 'text-green-400';
+        } else if (finalScore >= PENDING_SCORE) {
+            headerText = "Excellent Score - Request Pending Review";
+            bodyText = `Your score of <span class="font-extrabold text-yellow-400">${finalScore}/${TOTAL_QUESTIONS} (${scorePct}%)</span> is very strong, but did not meet the level for immediate approval. Your application will now be processed and reviewed by a team member before a final decision is made. You scored well; please wait for further contact.`;
+            bgColor = 'bg-yellow-600/20';
+            headerColor = 'text-yellow-400';
+        } else { // FAILED_SCORE or less
+            headerText = "Application Unsuccessful";
+            bodyText = `We appreciate your effort, but your score of <span class="font-extrabold text-red-400">${finalScore}/${TOTAL_QUESTIONS} (${scorePct}%)</span> does not meet the minimum requirements for our tutor positions at this time. We encourage you to reapply in the future after gaining more experience and knowledge in your target subject area.`;
+            bgColor = 'bg-red-600/20';
+            headerColor = 'text-red-400';
+        }
+
+        renderResultScreen(headerText, bodyText, bgColor, headerColor, isTimedOut, finalScore);
+    }
+    
+    function renderResultScreen(headerText, bodyText, bgColor, headerColor, isTimedOut, finalScore) {
+        const timeMessage = isTimedOut ? 
+            '<p class="text-base font-bold text-red-400 mt-2">The 30-minute timer expired.</p>' : 
+            '<p class="text-base font-bold text-green-400 mt-2">You submitted the exam before the timer expired.</p>';
+
+        app.innerHTML = `
+            <div class="w-full max-w-lg card p-8 md:p-10 rounded-2xl shadow-2xl transition-all duration-300 border-4" style="border-color: ${headerColor.replace('text-', '')}">
+                <h2 class="text-3xl font-extrabold ${headerColor} mb-6 text-center">${headerText}</h2>
+                <div class="space-y-4 text-center">
+                    <p class="text-xl text-text-color">Candidate: <span class="font-bold text-accent">${userName}</span></p>
+                    <p class="text-xl text-text-color">Target Grade: <span class="font-bold">${userGrade}</span></p>
+                    <div class="p-6 rounded-xl bg-bg-color shadow-xl border border-accent/40">
+                        <p class="text-6xl font-extrabold text-text-color">${finalScore} / ${TOTAL_QUESTIONS}</p>
+                        ${timeMessage}
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 rounded-lg bg-bg-color border border-accent/40">
+                    <p class="text-base text-subtle-text leading-relaxed" id="resultBody">${bodyText}</p>
+                </div>
+                
+                <button onclick="renderWelcomeScreen()" class="w-full mt-8 py-3 px-4 font-semibold rounded-lg shadow-xl transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50" style="background-color: #4b5563; color: white;">
+                    Exit & Restart Application
+                </button>
+            </div>
+        `;
+    }
+
+    // --- Modal Implementation (for confirmation) ---
+    function showModal(title, message, confirmCallback) {
+        const existingModal = document.getElementById('customModal');
+        if (existingModal) existingModal.remove();
+
+        const modalHtml = `
+            <div id="customModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+                <div class="card p-6 rounded-lg shadow-2xl w-full max-w-sm m-4 border border-accent/50">
+                    <h3 class="text-xl font-bold text-text-color mb-4">${title}</h3>
+                    <p class="text-subtle-text mb-6">${message}</p>
+                    <div class="flex justify-end space-x-3">
+                        <button id="modalCancel" class="px-4 py-2 text-subtle-text border border-sky-700/50 rounded-lg hover:bg-bg-color transition duration-150">
+                            Cancel
+                        </button>
+                        <button id="modalConfirm" class="px-4 py-2 text-white rounded-lg hover:bg-red-700 transition duration-150 shadow-md btn-red">
+                            Confirm Submission
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        document.getElementById('modalCancel').addEventListener('click', () => document.getElementById('customModal').remove());
+        document.getElementById('modalConfirm').addEventListener('click', () => {
+            document.getElementById('customModal').remove();
+            confirmCallback();
+        });
+    }
+
+    // --- MathJax Configuration for LaTeX Rendering ---
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+            fontCache: 'global'
+        },
+        startup: {
+            pageReady: () => {
+                renderWelcomeScreen();
+                return MathJax.startup.defaultPageReady();
+            }
+        }
+    };
+
+    // Load MathJax script (must be external for correct rendering)
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+    script.id = "MathJax-script";
+    document.head.appendChild(script);
+</script>
+<div id="verify-gate">
+  <div class="verify-box">
+    <h1 class="verify-title">We want to preserve what’s human.</h1>
+    <div class="verify-divider"></div>
+    <h2>Verifying you are human</h2>
+    <label class="check-container">
+      <input type="checkbox" id="human-check">
+      <span class="checkmark"></span>
+      <span class="label-text">I am human</span>
+    </label>
+  </div>
+</div>
+
+<style>
+  /* Background animation */
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  #verify-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #0a0f24, #142850, #233b6e, #1b2845);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+  }
+
+  .verify-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 22px;
+    padding: 50px 60px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: white;
+    font-family: "Segoe UI", "Inter", sans-serif;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: fadeInBox 1.5s ease;
+  }
+
+  @keyframes fadeInBox {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .verify-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+  }
+
+  .verify-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin-bottom: 25px;
+  }
+
+  .check-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 25px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .check-container:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.02);
+  }
+
+  input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #00aaff;
+  }
+
+  .label-text {
+    font-size: 18px;
+  }
+
+  body.verified #verify-gate {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  // Hide site until verified
+  document.addEventListener("DOMContentLoaded", () => {
+    const gate = document.getElementById("verify-gate");
+    const checkbox = document.getElementById("human-check");
+    document.body.style.overflow = "hidden";
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        document.body.classList.add("verified");
+        setTimeout(() => {
+          gate.remove();
+          document.body.style.overflow = "auto";
+        }, 1000);
+      }
+    });
+  });
+</script>
+</body>
+</html>
