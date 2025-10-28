@@ -9,6 +9,29 @@
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
     <style>
+         /* *** PASTE THIS CSS BLOCK INTO YOUR MAIN <style> TAG OR BEFORE </body> ***
+    Necessary styles copied from your existing file to ensure modal aesthetics work
+    */
+    .glassy-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(71, 85, 105, 0.3);
+    }
+
+    /* CRITICAL: Prevents scrolling when modal is open. This must be a global class. */
+    body.modal-open {
+        overflow: hidden;
+    }
+    
+    /* Modal Active States for smooth transition */
+    .modal-active {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+    .modal-active > div { /* Target the inner card for transformation */
+        transform: translateY(0) !important;
+    }
         html {
             height: 100%;
         }
@@ -574,8 +597,58 @@
             </div>
         </div>
     </nav>
-    <!-- Content Sections -->
-    <div class="container mx-auto px-4 mt-16" id="content-container">
+    <!-- Contact Section (Now just a button that launches the modal) -->
+<!-- *** REPLACE YOUR EXISTING <section id="contact"> WITH THIS *** -->
+<section class="py-20 px-6 max-w-4xl mx-auto text-center" id="contact">
+    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-blue-400 section-header">Contact Us</h2>
+    <p class="text-xl text-slate-300 mb-10">Ready to unlock your potential? Click the button below to send us a secure, private inquiry.</p>
+    <button id="open-contact-modal" class="py-4 px-12 bg-blue-600 text-white font-semibold rounded-full shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
+        Launch Inquiry Form
+        <!-- Contact Modal (Hidden by default, containing the form) -->
+<!-- *** PASTE THIS MODAL BLOCK IMMEDIATELY AFTER THE NEW CONTACT SECTION ABOVE *** -->
+<div id="contact-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div class="glassy-card p-8 rounded-2xl max-w-lg w-full m-4 relative shadow-2xl transform translate-y-4 transition-transform duration-300">
+        
+        <!-- Close Button (X) -->
+        <button id="close-contact-modal" class="absolute top-4 right-4 text-slate-400 hover:text-red-400 transition duration-300 focus:outline-none" aria-label="Close Form">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <!-- Modal Header -->
+        <h3 class="text-3xl font-bold mb-6 text-blue-400">Send a Tutoring Inquiry</h3>
+
+        <!-- Form Content (Formsubmit integration) -->
+        <!-- *** IMPORTANT: Replace 'your@email.com' in the action attribute below with your actual email address. *** -->
+        <form action="https://formsubmit.co/your@email.com" method="POST" class="space-y-4">
+            <!-- Formsubmit Hidden Configuration Fields -->
+            <input name="_subject" type="hidden" value="New Tutoring Inquiry from Modal"/>
+            <input name="_captcha" type="hidden" value="false"/>
+
+            <!-- Name Input -->
+            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
+                   placeholder="Your Name (Required)" required="" type="text" name="name"/>
+
+            <!-- Email Input -->
+            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
+                   placeholder="Your Email (Required)" required="" type="email" name="email"/>
+
+            <!-- Subject Input -->
+            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
+                   placeholder="Subject (Optional)" type="text" name="subject"/>
+
+            <!-- Message Textarea -->
+            <textarea class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400 h-28"
+                      placeholder="Your Message (Required)" required="" name="message"></textarea>
+
+            <!-- The Submit button -->
+            <button class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+                    type="submit">
+                Submit Inquiry
+            </button>
+        </form>
+    </div>
+</div>
+
         <!-- Home Section -->
         <section class="content-section flex items-center justify-center active" id="home">
             <div class="section-content w-full">
@@ -1991,8 +2064,47 @@
         });
 // --- End BAREXM Promo Code Handler ---
     </script>
+script>
+// --- Modal Functionality for Contact Form ---
+// *** PASTE THIS SCRIPT BLOCK BEFORE THE CLOSING </body> TAG ***
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('contact-modal');
+    const openButton = document.getElementById('open-contact-modal');
+    const closeButton = document.getElementById('close-contact-modal');
+
+    const openModal = () => {
+        if (!modal) return;
+        // Add modal-active to show and animate the modal
+        modal.classList.add('modal-active');
+        // Add modal-open to body to disable background scrolling
+        document.body.classList.add('modal-open');
+    };
+
+    const closeModal = () => {
+        if (!modal) return;
+        // Remove classes to hide the modal and re-enable scrolling
+        modal.classList.remove('modal-active');
+        document.body.classList.remove('modal-open');
+    };
+
+    // 1. Open when the button is clicked
+    if (openButton) openButton.addEventListener('click', openModal);
+
+    // 2. Close when the 'X' button is clicked
+    if (closeButton) closeButton.addEventListener('click', closeModal);
+
+    // 3. Close when clicking outside the modal content (on the overlay)
+    if (modal) modal.addEventListener('click', (e) => {
+        // Only close if the click target is the modal container itself
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+});
+</script>
 </body>
 
 </html>
+
 
 
