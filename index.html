@@ -1,41 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>AK Tutoring Co.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <style>
-         /* *** PASTE THIS CSS BLOCK INTO YOUR MAIN <style> TAG OR BEFORE </body> ***
-    Necessary styles copied from your existing file to ensure modal aesthetics work
-    */
-    .glassy-card {
-        background: rgba(30, 41, 59, 0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(71, 85, 105, 0.3);
-    }
-
-    /* CRITICAL: Prevents scrolling when modal is open. This must be a global class. */
-    body.modal-open {
-        overflow: hidden;
-    }
-    
-    /* Modal Active States for smooth transition */
-    .modal-active {
-        opacity: 1 !important;
-        pointer-events: auto !important;
-    }
-    .modal-active > div { /* Target the inner card for transformation */
-        transform: translateY(0) !important;
-    }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AK Tutoring Co.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
         html {
             height: 100%;
         }
-
         body {
             height: 100%;
             font-family: 'Inter', sans-serif;
@@ -44,16 +21,13 @@
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         body.light-mode {
             background-color: #e2e8f0;
             color: #1e293b;
         }
-
         body.modal-open {
             overflow: hidden;
         }
-
         .glassy-nav {
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
@@ -62,12 +36,10 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-
         body.light-mode .glassy-nav {
             background-color: rgba(224, 242, 254, 0.75);
             border-bottom: 1px solid rgba(255, 255, 255, 0.5);
         }
-
         .content-section {
             padding-top: 6rem;
             display: none;
@@ -75,26 +47,17 @@
             justify-content: space-between;
             min-height: 100vh;
         }
-
         .content-section.active {
             display: flex;
             animation: fadeIn 0.5s ease-in-out;
         }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
         .container {
             max-width: 800px;
         }
-
         .section-title {
             position: relative;
             display: inline-block;
@@ -102,7 +65,6 @@
             font-size: 2.5rem;
             font-weight: 700;
         }
-
         .section-title::after {
             content: '';
             position: absolute;
@@ -114,24 +76,19 @@
             border-radius: 9999px;
             transition: background-color 0.3s ease;
         }
-
         body.light-mode .section-title::after {
             background-color: #3b82f6;
         }
-
         .nav-link {
             cursor: pointer;
             transition: color 0.3s ease;
         }
-
         .nav-link:hover {
             color: #9ca3af;
         }
-
         body.light-mode .nav-link:hover {
             color: #3b82f6;
         }
-
         .section-content {
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(30, 41, 59, 0.5);
@@ -144,57 +101,46 @@
             max-height: 80vh;
             overflow-y: auto;
         }
-
         body.light-mode .section-content {
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
-
         .section-content:hover {
             transform: scale(1.02);
         }
-
         .section-content.no-modal:hover {
             transform: none;
         }
-
         .resume-section .list-item {
             display: flex;
             margin-bottom: 0.5rem;
         }
-
         .resume-section .list-item-title {
             font-weight: bold;
             flex-shrink: 0;
             min-width: 150px;
         }
-
         .contact-info a {
             color: #9ca3af;
             text-decoration: underline;
         }
-
         body.light-mode .contact-info a {
             color: #1e293b;
         }
-
         .footer {
             padding: 1rem;
             text-align: center;
             font-size: 0.875rem;
             color: #94a3b8;
         }
-
         .footer a {
             color: #6366f1;
             text-decoration: none;
             transition: color 0.3s ease;
         }
-
         .footer a:hover {
             color: #3b82f6;
         }
-
         /* Modal Popup Styles */
         .modal {
             display: none;
@@ -211,7 +157,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .modal-content-wrapper {
             position: relative;
             margin: auto;
@@ -221,86 +166,31 @@
             border-radius: 1rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
-
         .modal-content {
             background-color: #1e293b;
             color: #e2e8f0;
             border-radius: 1rem;
             padding: 2rem;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-height: 80vh; /* Changed from 70vh to 80vh for form */
+            max-height: 70vh;
             overflow-y: auto;
         }
-
         body.light-mode .modal-content {
             background-color: #f1f5f9;
             color: #1e293b;
         }
-
         .close-btn {
             color: #aaa;
-            position: absolute; /* Changed for better positioning */
-            top: 25px; /* Adjust as needed */
-            right: 35px; /* Adjust as needed */
+            float: right;
             font-size: 28px;
             font-weight: bold;
-            z-index: 101; /* Ensure it's above content */
         }
-
         .close-btn:hover,
         .close-btn:focus {
             color: white;
             text-decoration: none;
             cursor: pointer;
         }
-        
-        body.light-mode .close-btn:hover,
-        body.light-mode .close-btn:focus {
-            color: #1e293b;
-        }
-
-        /* Inquiry Form Inputs */
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid #475569;
-            /* dark mode border */
-            background-color: #334155;
-            /* dark mode bg */
-            color: #e2e8f0;
-            /* dark mode text */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #6366f1;
-            /* dark mode focus */
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
-        }
-
-        body.light-mode .form-input {
-            border-color: #cbd5e1;
-            /* light mode border */
-            background-color: #ffffff;
-            /* light mode bg */
-            color: #1e293b;
-            /* light mode text */
-        }
-
-        body.light-mode .form-input:focus {
-            border-color: #3b82f6;
-            /* light mode focus */
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
 
         /* Widget button styles */
         .widget-button {
@@ -317,25 +207,20 @@
             z-index: 90;
             transition: transform 0.3s ease, background-color 0.3s ease;
         }
-
         .widget-button:hover {
             transform: scale(1.1);
         }
-
         #kamath-ai-button {
             right: 1.5rem;
             background-color: #6366f1;
         }
-
         body.light-mode #kamath-ai-button {
             background-color: #3b82f6;
         }
-
         #promo-code-button {
             left: 1.5rem;
             background-color: #22c55e;
         }
-
         body.light-mode #promo-code-button {
             background-color: #16a34a;
         }
@@ -358,26 +243,21 @@
             flex-direction: column;
             padding: 1.5rem;
         }
-
         body.light-mode .widget-pop-up {
             background-color: #f1f5f9;
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
-
         .widget-pop-up.active {
             transform: translateY(0);
             opacity: 1;
             visibility: visible;
         }
-
         #kamath-ai-widget {
             right: 1.5rem;
         }
-
         #promo-code-widget {
             left: 1.5rem;
         }
-
         .widget-header {
             display: flex;
             justify-content: space-between;
@@ -386,11 +266,9 @@
             border-bottom: 1px solid #334155;
             margin-bottom: 1rem;
         }
-
         body.light-mode .widget-header {
             border-color: #cbd5e1;
         }
-
         .chat-message-box {
             background-color: #334155;
             border-radius: 0.75rem;
@@ -398,12 +276,10 @@
             margin-bottom: 1rem;
             color: #e2e8f0;
         }
-
         body.light-mode .chat-message-box {
             background-color: #e2e8f0;
             color: #1e293b;
         }
-
         .faq-button {
             background-color: #1e293b;
             border: 1px solid #334155;
@@ -413,22 +289,18 @@
             transition: background-color 0.2s ease, transform 0.2s ease;
             color: #94a3b8;
         }
-
         body.light-mode .faq-button {
             background-color: #cbd5e1;
             border: 1px solid #94a3b8;
             color: #1e293b;
         }
-
         .faq-button:hover {
             background-color: #334155;
             transform: scale(1.02);
         }
-
         body.light-mode .faq-button:hover {
             background-color: #b9c1cb;
         }
-
         .try-again-button {
             background-color: #6366f1;
             color: white;
@@ -438,13 +310,10 @@
             margin-top: 1rem;
             text-align: center;
         }
-
         body.light-mode .try-again-button {
             background-color: #3b82f6;
         }
-
-        .widget-content-area input,
-        .widget-content-area select {
+        .widget-content-area input, .widget-content-area select {
             color: black;
         }
 
@@ -457,26 +326,21 @@
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-
         .option-label:hover {
             background: #475569;
         }
-
         body.light-mode .option-label {
             background: #cbd5e1;
             color: #1e293b;
         }
-
         body.light-mode .option-label:hover {
             background: #94a3b8;
         }
-
-        .option-input:checked+.option-label {
+        .option-input:checked + .option-label {
             background: #6366f1;
             color: white;
         }
-
-        body.light-mode .option-input:checked+.option-label {
+        body.light-mode .option-input:checked + .option-label {
             background: #3b82f6;
             color: white;
         }
@@ -492,814 +356,612 @@
             overflow-y: auto;
             display: none;
         }
-
         body.light-mode .resume-content {
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
-
         .resume-content.active {
             display: block;
         }
+    
+/* --- Verified Tutor Checkmark --- */
+.checkmark {
+  color: #22c55e;
+  font-weight: bold;
+  margin-left: 6px;
+  cursor: pointer;
+  position: relative;
+}
 
-        /* --- Verified Tutor Checkmark --- */
-        .checkmark {
-            color: #22c55e;
-            font-weight: bold;
-            margin-left: 6px;
-            cursor: pointer;
-            position: relative;
-        }
+.checkmark::after {
+  content: "verified excellence tutor";
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
 
-        .checkmark::after {
-            content: "verified excellence tutor";
-            position: absolute;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.85);
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            opacity: 0;
-            white-space: nowrap;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
+.checkmark:hover::after {
+  opacity: 1;
+}
 
-        .checkmark:hover::after {
-            opacity: 1;
-        }
+/* --- Checkmark Info Popup --- */
+#checkmarkPopup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
 
-        /* --- Checkmark Info Popup --- */
-        #checkmarkPopup {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
+#checkmarkPopup .popup-content {
+  background: #fff;
+  color: #000;
+  max-width: 550px;
+  margin: 10% auto;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
 
-        #checkmarkPopup .popup-content {
-            background: #fff;
-            color: #000;
-            max-width: 550px;
-            margin: 10% auto;
-            padding: 20px 25px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
+#checkmarkPopup .close-btn {
+  color: #333;
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
+#checkmarkPopup .close-btn:hover {
+  color: red;
+}
 
-        #checkmarkPopup .close-btn {
-            color: #333;
-            float: right;
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        #checkmarkPopup .close-btn:hover {
-            color: red;
-        }
     </style>
 </head>
-
 <body class="bg-gray-900 text-gray-200">
-    <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 w-full z-50 py-4 px-8 glassy-nav">
-        <div class="container mx-auto flex justify-between items-center">
-            <a class="text-xl font-bold nav-link" data-tab="home" href="#">AK Tutoring Co.</a>
-            <!-- Main navigation links always visible -->
-            <div class="flex space-x-8 items-center">
-                <a class="nav-link" data-tab="home" href="#">Home</a>
-                <a class="nav-link" data-tab="about" href="#">About</a>
-                <a class="nav-link" data-tab="resume" href="#">Tutor Resumes</a>
-                <a class="nav-link" data-tab="pricing" href="#">Pricing</a>
-                <a class="nav-link" data-tab="contact" href="#">Contact Us</a>
-                <button class="nav-link focus:outline-none" id="mode-toggle">
-                    <svg class="w-6 h-6" fill="none" id="moon-icon" stroke="currentColor" viewbox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                    <svg class="w-6 h-6 hidden" fill="none" id="sun-icon" stroke="currentColor" viewbox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-    <!-- Contact Section (Now just a button that launches the modal) -->
-<!-- *** REPLACE YOUR EXISTING <section id="contact"> WITH THIS *** -->
-<section class="py-20 px-6 max-w-4xl mx-auto text-center" id="contact">
-    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-blue-400 section-header">Contact Us</h2>
-    <p class="text-xl text-slate-300 mb-10">Ready to unlock your potential? Click the button below to send us a secure, private inquiry.</p>
-    <button id="open-contact-modal" class="py-4 px-12 bg-blue-600 text-white font-semibold rounded-full shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
-        Launch Inquiry Form
-        <!-- Contact Modal (Hidden by default, containing the form) -->
-<!-- *** PASTE THIS MODAL BLOCK IMMEDIATELY AFTER THE NEW CONTACT SECTION ABOVE *** -->
-<div id="contact-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
-    <div class="glassy-card p-8 rounded-2xl max-w-lg w-full m-4 relative shadow-2xl transform translate-y-4 transition-transform duration-300">
-        
-        <!-- Close Button (X) -->
-        <button id="close-contact-modal" class="absolute top-4 right-4 text-slate-400 hover:text-red-400 transition duration-300 focus:outline-none" aria-label="Close Form">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
+<!-- Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 py-4 px-8 glassy-nav">
+<div class="container mx-auto flex justify-between items-center">
+<a class="text-xl font-bold nav-link" data-tab="home" href="#">AK Tutoring Co.</a>
+<!-- Main navigation links always visible -->
+<div class="flex space-x-8 items-center">
+<a class="nav-link" data-tab="home" href="#">Home</a>
+<a class="nav-link" data-tab="about" href="#">About</a>
+<a class="nav-link" data-tab="resume" href="#">Tutor Resumes</a>
+<a class="nav-link" data-tab="pricing" href="#">Pricing</a>
+<a class="nav-link" data-tab="contact" href="#">Contact Us</a>
+<button class="nav-link focus:outline-none" id="mode-toggle">
+<svg class="w-6 h-6" fill="none" id="moon-icon" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<svg class="w-6 h-6 hidden" fill="none" id="sun-icon" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</nav>
+<!-- Content Sections -->
+<div class="container mx-auto px-4 mt-16" id="content-container">
+<!-- Home Section -->
+<section class="content-section flex items-center justify-center active" id="home">
+<div class="section-content w-full">
+<h1 class="text-4xl md:text-5xl font-extrabold mb-4">Welcome to AK Tutoring Co.</h1>
+<p class="text-lg md:text-xl text-gray-400">
+                    Every child has unique potential waiting to be unlocked. My mission is to provide personalized, one-on-one tutoring that goes beyond the standard classroom pace, helping each student build a strong foundation, strengthen school concepts, and explore new topics.
+                </p>
+</div>
+<footer class="footer">
+<p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
+<p><a class="terms-link" href="#">Terms and Conditions</a></p>
+</footer>
+</section>
+<!-- About Section -->
+<section class="content-section flex items-center justify-center" id="about">
+<div class="section-content w-full">
+<h2 class="section-title text-gray-100">My Philosophy: Unlocking Individual Potential</h2>
+<p class="text-lg text-gray-300">
+                    In today's classrooms, a one-size-fits-all approach can often hold students back. I believe in providing an individualized and diverse learning experience tailored to each student's personal needs. I currently offer tutoring in **Reading** and **Math**, but special inquiries can be made.
+                </p>
+<p class="mt-4 text-lg text-gray-300">
+                    Unlike the "medium learning speed" of traditional schools, private tutoring allows for a custom pace. This one-on-one attention can significantly strengthen concepts taught in class and provide the opportunity for more learning than what is regularly taught. My goal is to empower students to reach their full potential and build a lifelong love for learning.
+                </p>
+</div>
+<footer class="footer">
+<p>© AK Tutoring LLC, All rights reserved to Aditya Kamath, and the rest of our tutors.</p>
+<p><a class="terms-link" href="#">Terms and Conditions</a></p>
+</footer>
+</section>
+<!-- Tutor Resumes Section -->
+<section class="content-section flex items-center justify-center" id="resume">
+<div class="section-content w-full resume-section no-modal" id="resume-section-content">
+<h2 class="section-title text-gray-100">Tutor Resumes</h2>
+<!-- Dropdown Menu -->
+<div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+<label class="text-lg font-medium text-gray-300" for="tutor-select">Select a tutor:</label>
+<select class="py-2 px-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-100" id="tutor-select" onchange="showResume()">
+<option disabled="" selected="" value="">-- Choose a Tutor --</option>
+<option value="adi">Adi Kamath (Head Tutor)</option>
+<option value="sandeep">Sandeep Kurma Tutor</option>
+<option value="krishna">Krishna Natarajan Tutor(reccomended)</option>
+<option value="vivaan">Vivaan Sharma Tutor</option>
+<option value="kush">Kush Billa Tutor</option>
+<option value="vihan">Vihan Lekkala Tutor</option>
+<option value="sesha">Sesha Shreeram Tutor</option>
+</select>
+<script>
+                        document.querySelectorAll('#tutor-select option').forEach(opt => {
+                        if (opt.textContent.includes('✔')) {
+                        const span = document.createElement('span');
+                        span.className = 'checkmark';
+                        span.textContent = '✔';
+                        span.onclick = openCheckmarkPopup;
+                          }
+                            });
+                    </script>
+</div>
+<!-- Resume Containers -->
+<div id="resume-container">
+<!-- Adi Kamath (Head Tutor) Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-adi">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Adi Kamath (Head Tutor)</h2>
+<div class="text-lg text-gray-300">
+<hr class="my-4 border-gray-700"/>
+<p class="font-bold text-lg mb-2">Extracurricular Skills:</p>
+<ul class="list-disc list-inside space-y-2 pl-4">
+<li>Experienced piano player (classes for 5 years)</li>
+<li>Advanced chess player (5 years), recently placing 2nd Place in Washington grades 4-12 Chess Competition(Tournament with 75+ Players)</li>
+<li>Math Kangaroo Award Winner(Top Scoring Award Aknowledgement)</li>
+<li>Attended Summer Course At University of Washington for Mock Trial, intermediate knowledge in Legal court procedures, etiquette, orders, objections, and more.</li>
+<li>Competitive Robotics Experience (3 years) with states qualification scores in top 10 in Washington State, and top 100 in U.S</li>
+<li>Proficient Knowledge in Scratch, Python, JavaScript and HTML coding, able to write functional and aesthetic code, using HTMl for core functions, CSS for styling, and Java for functionality </li>
+<li>Experienced in coding, with head role of robot autonomous on Championship robotics team, and exprienced building and execution of websites(This one was made by me!).
+                                <li>Advanced basketball player (4 years), with roles on School Junior Varsity and Varsity Basketball Programs, and made Eastlate Select A team Selection</li>
+<li>Semester-long course on Engineering and Design Modeling, passed with 95/100 and certification, with proficient understanding of LdCAD, Autodesk, TinkerCAD and Whitebox</li>
+<li>Semester-long course on Media Production, passed with a 98/100 and certification, with proficient understanding of Adobe Photoshop, Adobe After Effects, WeVideo and Capcut</li>
+<li>Owns a growing and successful YouTube channel with 600+ subscribers.</li>
+<li>Is billingual, knowing both American English and Konkani(Language with roots in Southern India, in South Karnataka and pieces of Kerala)</li>
+</li></ul>
+<hr class="my-4 border-gray-700"/>
+<p class="font-bold text-lg mb-2">Academic Skills:</p>
+<ul class="list-disc list-inside space-y-2 pl-4">
+<li>4.0 GPA overall</li>
+<li>A+ Grade in Algebra, Geometry, Geology, English/Vocab, American History, Computer Science, and Chemistry (All at 8th grade or below level).</li>
+<li>Position on Math Olympiad Team At Inglewood Middle School</li>
+<li>Head of Debate Club at Inglewood Middle School</li>
+<li>Leader in Math Club with top 2% Score at Inglewood Middle School</li>
+<li>Score in 99th Percentile in CoGat Cognitive Assessment</li>
+<li>National Junior Honor Society Member</li>
+</ul>
+<hr class="my-4 border-gray-700"/>
+<p class="font-bold text-lg mb-2">Availability:</p>
+<p>Free for most timings, can have some issues if colliding with personal classes.</p>
+<hr class="my-4 border-gray-700"/>
+<p class="font-bold text-lg mb-2">Restrictions:</p>
+<ul class="list-disc list-inside space-y-2 pl-4">
+<li><strong>Age:</strong> Only able to do tutor people 14 and under</li>
+<li><strong>Location:</strong> Only able to do jobs in surrounding area</li>
+<li><strong>Language:</strong> Only proficiently speaks two languages (American English and Konkani), Currently learning Spanish, at Novice High current proficiency</li>
+</ul>
+</div>
+</div>
+<!-- Sandeep Kurma Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-sandeep">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Sandeep Kurma</h2>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>3.98 GPA overall, with A grades in Algebra, Geometry, Geology, English/Vocabulary, American History, Computer Science, and Chemistry (all 8th grade or below)</li>
+<li>Communication and critical thinking skills developed through tutoring and group projects</li>
+<li>Able to break down complex subjects into easy-to-understand lessons</li>
+<li>Helps students set goals and master study techniques</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Practical problem-solving in graph theory, quadratic equations, and coordinate geometry</li>
+<li>Prepared answer keys and quizzes for peers, focusing on exam practice</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Free most days and times</li>
+<li>Can tutor students 13 and under</li>
+<li>Willing to tutor in the surrounding local area</li>
+<li>English only</li>
+</ul>
+</div>
+</div>
+<!-- Vivaan Sharma Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-vivaan">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Vivaan Sharma</h2>
+<div class="mb-4 text-gray-300">
+<p>Age: 13 years</p>
+<p>8th grader at Inglewood Middle School</p>
+<p>Student with complete academic and extracurricular resume, skilled in many subjects.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+<p class="text-gray-300">I want to inspire students to constantly learn and grow.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Member of Inglewood National Junior Honor Society</li>
+<li>A+ grade in Science, Leadership, Language Arts, Spanish, Algebra 1, Computer Science, and History, all in grades 8 and under</li>
+<li>Member of the Associate Student Body, with the role of 8th Grade Representative</li>
+<li>Enrolled in Leadership 2 Class</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Experienced in guitar and piano, formerly took classes</li>
+<li>On advanced Cricket team, that has was awarded a states qualification</li>
+<li>Experienced in Scratch coding(Blocks representing underwritten python code)</li>
+<li>Aquired position on Inglewood badminton team, on both Junior Varsity and Varsity</li>
+<li>Bilingual, proficient in English and Hindi</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Generally available after school and weekends; may have scheduling conflicts with personal classes. Only able to do jobs suitable for age and in surrounding area.</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Age: Tutoring ages 13 and under recommended</li>
+<li>Location: Available for opportunities within the local area</li>
+<li>Language: Proficient in American English and Hindi, currently learning Assisted Sign Language and Spanish</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Kush Billa -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-kush">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Kush Billa</h2>
+<div class="mb-4 text-gray-300">
+<p>Age: 13 years</p>
+<p>8th grader at Inglewood Middle School</p>
+<p>Strong student experienced in multiple fields like music, sports, and robotics with excellence in academics in addition</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+<p class="text-gray-300">I want to help my peers and be a mentor and learning figure to kids younger than me, as well as to inspire them.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>3.9 GPA overall</li>
+<li>A+ grade in Science, Geometry, English, US History, Washington History, Robotics, and Algebra.</li>
+<li>Member of National Honor Society</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>One year experience in VEX IQ Robotics</li>
+<li>Growing Piano player with improving skill</li>
+<li>Intermediate Chess player with 2 years experience</li>
+<li>Placed 3rd at closed 8-15 years chess tournament</li>
+<li>Participating in Math Olympiad for past year</li>
+<li>Experienced in block coding</li>
+<li>Badminton player on Inglewood team, playing for 4 years</li>
+<li>Semester long course in Robotics, passing with an A+ Grade</li>
+<li>Trained Leadership skills with two years experience</li>
+<li>Elected into associate student body for all three years of middle school</li>
+<li>Currently learning Spanish</li>
+<li>Currently learning Assisted Sign Language</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Generally available after school and weekends, willing to move personal schedule to accomodate</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Age: Tutoring ages 13 and under recommended</li>
+<li>Location: Available for opportunities within the local area</li>
+<li>Language: Proficient in American English, currently learning Spanish</li>
+</ul>
+</div>
+</div>
+</section></div>
 
-        <!-- Modal Header -->
-        <h3 class="text-3xl font-bold mb-6 text-blue-400">Send a Tutoring Inquiry</h3>
-
-        <!-- Form Content (Formsubmit integration) -->
-        <!-- *** IMPORTANT: Replace 'your@email.com' in the action attribute below with your actual email address. *** -->
-        <form action="https://formsubmit.co/business.adikamath@gmail.com" method="POST" class="space-y-4">
-            <!-- Formsubmit Hidden Configuration Fields -->
-            <input name="_subject" type="hidden" value="New Tutoring Inquiry from Modal"/>
-            <input name="_captcha" type="hidden" value="false"/>
-
-            <!-- Name Input -->
-            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
-                   placeholder="Your Name (Required)" required="" type="text" name="name"/>
-
-            <!-- Email Input -->
-            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
-                   placeholder="Your Email (Required)" required="" type="email" name="email"/>
-
-            <!-- Subject Input -->
-            <input class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400"
-                   placeholder="Subject (Optional)" type="text" name="subject"/>
-
-            <!-- Message Textarea -->
-            <textarea class="w-full bg-slate-800 text-white p-3 rounded-lg border border-slate-700 focus:border-blue-400 focus:outline-none transition duration-300 placeholder-slate-400 h-28"
-                      placeholder="Your Message (Required)" required="" name="message"></textarea>
-
-            <!-- The Submit button -->
-            <button class="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-                    type="submit">
-                Submit Inquiry
-            </button>
-        </form>
-    </div>
+<!-- Krishna Natarajan Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-krishna">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Krishna Natarajan</h2>
+<div class="mb-4 text-gray-300">
+<p>Age: 12 years</p>
+<p>7th grader at Evergreen Middle School</p>
+<p>Motivated and well-rounded student with strong academic performance and diverse extracurricular achievements in music, robotics, athletics, and language studies.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+<p class="text-gray-300">I want to help students in the community not only excel academically but also enjoy learning.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>QUEST (gifted) program student at Evergreen Middle School</li>
+<li>4.0 GPA overall</li>
+<li>Won short story competitions organized by Future Scholar</li>
+<li>Placed on the podium at Math is Cool competitions</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Four years of hands-on robotics experience, advanced to state level in VEX IQ Robotics</li>
+<li>Intermediate Carnatic violist (3 1/2 years)</li>
+<li>Western cello player and pianist (3 years each)</li>
+<li>Active hockey player (competitive experience)</li>
+<li>Brown belt in Taekwondo</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Generally available after school and weekends; may have scheduling conflicts with personal classes</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Age: Tutoring ages 12 and under recommended</li>
+<li>Location: Available for opportunities within the local area</li>
+<li>Language: Proficient in American English; can understand well but only somewhat speak Tamil</li>
+</ul>
+</div>
 </div>
 
-        <!-- Home Section -->
-        <section class="content-section flex items-center justify-center active" id="home">
-            <div class="section-content w-full">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Welcome to AK Tutoring Co.</h1>
-                <p class="text-lg md:text-xl text-gray-400">
-                    Every child has unique potential waiting to be unlocked. My mission is to provide personalized,
-                    one-on-one tutoring that goes beyond the standard classroom pace, helping each student build a
-                    strong foundation, strengthen school concepts, and explore new topics.
+
+<!-- Vihan Lekkala Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-vihan">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Vihan Lekkala</h2>
+<div class="mb-4 text-gray-300">
+<p>Age: 13 years</p>
+<p>8th grader at Inglewood Middle School</p>
+<p>Motivated and high-performing student with strong academics and diverse extracurricular achievements in sports, music, and language.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+<p class="text-gray-300">I want to help students in the community be able to pass their classes, enjoy learning, and improve on areas they’re struggling with.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>3.8 GPA overall</li>
+<li>Consistent member of Science Olympiad at Inglewood Middle School</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Intermediate chess player with 3 years’ experience</li>
+<li>Experienced basketball player (7 years, Eastlake A team selection for 4 years)</li>
+<li>Skilled tackle football player (1 year, Eastlake Varsity)</li>
+<li>Intermediate drum player with 3 years’ experience</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Generally available after school and weekends; may have scheduling conflicts with personal classes.</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Age: Tutoring ages 13 and under recommended</li>
+<li>Location: Available for opportunities within the local area</li>
+<li>Languages: Proficient in American English and Telugu; currently learning Spanish</li>
+</ul>
+</div>
+</div>
+<!-- Sesha Shreeram Resume -->
+<div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200" id="resume-sesha">
+<h2 class="text-3xl font-semibold mb-4 text-gray-100">Sesha Shreeram</h2>
+<div class="mb-4 text-gray-300">
+<p>Age: 13 years</p>
+<p>8th grader at Inglewood Middle School</p>
+<p>Motivated and well-rounded student with strong academic performance and diverse extracurricular achievements in music, robotics, athletics, and language studies.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor</h3>
+<p class="text-gray-300">I want to help students in the community be able to complete their classes, and enjoy them.</p>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Student at Inglewood Middle School</li>
+<li>4.0 GPA overall</li>
+<li>Qualified for the National Science Bowl in Physics and Chemistry</li>
+<li>Consistent participator in Science Olympiads</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular Skills</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Completed Semester Long Engineering and Design Modelng Course with proficiency in CAD, Whitebox, Autodesk, and more.</li>
+<li>Skilled in Python, able to write functional code</li>
+<li>Advanced Chess Player with 4 years experience</li>
+<li>Experienced guitar player with 3 years of experience</li>
+<li>Languages: Fluent in English and Tamil, currently learning French.</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Generally available after school and weekends; may have scheduling conflicts with personal classes.</li>
+<li>Only able to do jobs suitable for age and in surrounding area.</li>
+</ul>
+</div>
+<div class="mb-6">
+<h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
+<ul class="list-disc list-inside space-y-1 text-gray-300">
+<li>Age: Tutoring ages 12 and under recommended</li>
+<li>Location: Available for opportunities within the local area</li>
+<li>Language: Proficient in American English; can understand well but only somewhat speak Tamil</li>
+</ul>
+</div>
+</div>
+
+
+<footer class="footer">
+<p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
+<p><a class="terms-link" href="#">Terms and Conditions</a></p>
+</footer>
+
+<!-- Pricing Section -->
+<section class="content-section flex items-center justify-center" id="pricing">
+<div class="section-content w-full">
+<h2 class="section-title text-gray-100">Pricing</h2>
+<p class="text-lg text-gray-300">
+                    My standard tutoring rate is $20 per hour.
                 </p>
-            </div>
-            <footer class="footer">
-                <p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
-                <p><a class="terms-link" href="#">Terms and Conditions</a></p>
-            </footer>
-        </section>
-        <!-- About Section -->
-        <section class="content-section flex items-center justify-center" id="about">
-            <div class="section-content w-full">
-                <h2 class="section-title text-gray-100">My Philosophy: Unlocking Individual Potential</h2>
-                <p class="text-lg text-gray-300">
-                    In today's classrooms, a one-size-fits-all approach can often hold students back. I believe in
-                    providing an individualized and diverse learning experience tailored to each student's personal
-                    needs. I currently offer tutoring in **Reading** and **Math**, but special inquiries can be made.
+<p class="mt-4 text-lg text-gray-300">
+                    However, this can be subject to change based on special circumstances, such as a student's specific needs, the complexity of the subject, or travel distance. I can discuss a custom rate during our initial consultation to ensure it works for everyone.
                 </p>
-                <p class="mt-4 text-lg text-gray-300">
-                    Unlike the "medium learning speed" of traditional schools, private tutoring allows for a custom
-                    pace. This one-on-one attention can significantly strengthen concepts taught in class and provide
-                    the opportunity for more learning than what is regularly taught. My goal is to empower students
-                    to reach their full potential and build a lifelong love for learning.
+</div>
+<footer class="footer">
+<p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
+<p><a class="terms-link" href="#">Terms and Conditions</a></p>
+</footer>
+</section>
+<!-- Contact Us Section -->
+<section class="content-section flex items-center justify-center" id="contact">
+<div class="section-content w-full contact-info">
+<h2 class="section-title text-gray-100">Contact Us</h2>
+<p class="text-lg text-gray-300">
+                    Requests for tutoring can take up to 72 hours to be responded to.
                 </p>
-            </div>
-            <footer class="footer">
-                <p>© AK Tutoring LLC, All rights reserved to Aditya Kamath, and the rest of our tutors.</p>
-                <p><a class="terms-link" href="#">Terms and Conditions</a></p>
-            </footer>
-        </section>
-        <!-- Tutor Resumes Section -->
-        <section class="content-section flex items-center justify-center" id="resume">
-            <div class="section-content w-full resume-section no-modal" id="resume-section-content">
-                <h2 class="section-title text-gray-100">Tutor Resumes</h2>
-                <!-- Dropdown Menu -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-                    <label class="text-lg font-medium text-gray-300" for="tutor-select">Select a tutor:</label>
-                    <select
-                        class="py-2 px-4 border border-gray-700 bg-gray-800 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-100"
-                        id="tutor-select" onchange="showResume()">
-                        <option disabled="" selected="" value="">-- Choose a Tutor --</option>
-                        <option value="adi">Adi Kamath (Head Tutor)</option>
-                        <option value="sandeep">Sandeep Kurma Tutor</option>
-                        <option value="krishna">Krishna Natarajan Tutor(reccomended)</option>
-                        <option value="vivaan">Vivaan Sharma Tutor</option>
-                        <option value="kush">Kush Billa Tutor</option>
-                        <option value="vihan">Vihan Lekkala Tutor</option>
-                        <option value="sesha">Sesha Shreeram Tutor</option>
-                    </select>
-                    <script>
-                        document.querySelectorAll('#tutor-select option').forEach(opt => {
-                            if (opt.textContent.includes('✔')) {
-                                const span = document.createElement('span');
-                                span.className = 'checkmark';
-                                span.textContent = '✔';
-                                span.onclick = openCheckmarkPopup;
-                            }
-                        });
-                    </script>
-                </div>
-                <!-- Resume Containers -->
-                <div id="resume-container">
-                    <!-- Adi Kamath (Head Tutor) Resume -->
-                    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-                        id="resume-adi">
-                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Adi Kamath (Head Tutor)</h2>
-                        <div class="text-lg text-gray-300">
-                            <hr class="my-4 border-gray-700" />
-                            <p class="font-bold text-lg mb-2">Extracurricular Skills:</p>
-                            <ul class="list-disc list-inside space-y-2 pl-4">
-                                <li>Experienced piano player (classes for 5 years)</li>
-                                <li>Advanced chess player (5 years), recently placing 2nd Place in Washington grades
-                                    4-12 Chess Competition(Tournament with 75+ Players)</li>
-                                <li>Math Kangaroo Award Winner(Top Scoring Award Aknowledgement)</li>
-                                <li>Attended Summer Course At University of Washington for Mock Trial, intermediate
-                                    knowledge in Legal court procedures, etiquette, orders, objections, and more.</li>
-                                <li>Competitive Robotics Experience (3 years) with states qualification scores in top
-                                    10 in Washington State, and top 100 in U.S</li>
-                                <li>Proficient Knowledge in Scratch, Python, JavaScript and HTML coding, able to
-                                    write functional and aesthetic code, using HTMl for core functions, CSS for
-                                    styling, and Java for functionality </li>
-                                <li>Experienced in coding, with head role of robot autonomous on Championship
-                                    robotics team, and exprienced building and execution of websites(This one was
-                                    made by me!).
-                                <li>Advanced basketball player (4 years), with roles on School Junior Varsity and
-                                    Varsity Basketball Programs, and made Eastlate Select A team Selection</li>
-                                <li>Semester-long course on Engineering and Design Modeling, passed with 95/100 and
-                                    certification, with proficient understanding of LdCAD, Autodesk, TinkerCAD and
-                                    Whitebox</li>
-                                <li>Semester-long course on Media Production, passed with a 98/100 and
-                                    certification, with proficient understanding of Adobe Photoshop, Adobe After
-                                    Effects, WeVideo and Capcut</li>
-                                <li>Owns a growing and successful YouTube channel with 600+ subscribers.</li>
-                                <li>Is billingual, knowing both American English and Konkani(Language with roots in
-                                    Southern India, in South Karnataka and pieces of Kerala)</li>
-                                </li>
-                            </ul>
-                            <hr class="my-4 border-gray-700" />
-                            <p class="font-bold text-lg mb-2">Academic Skills:</p>
-                            <ul class="list-disc list-inside space-y-2 pl-4">
-                                <li>4.0 GPA overall</li>
-                                <li>A+ Grade in Algebra, Geometry, Geology, English/Vocab, American History,
-                                    Computer Science, and Chemistry (All at 8th grade or below level).</li>
-                                <li>Position on Math Olympiad Team At Inglewood Middle School</li>
-                                <li>Head of Debate Club at Inglewood Middle School</li>
-                                <li>Leader in Math Club with top 2% Score at Inglewood Middle School</li>
-                                <li>Score in 99th Percentile in CoGat Cognitive Assessment</li>
-                                <li>National Junior Honor Society Member</li>
-                            </ul>
-                            <hr class="my-4 border-gray-700" />
-                            <p class="font-bold text-lg mb-2">Availability:</p>
-                            <p>Free for most timings, can have some issues if colliding with personal classes.</p>
-                            <hr class="my-4 border-gray-700" />
-                            <p class="font-bold text-lg mb-2">Restrictions:</p>
-                            <ul class="list-disc list-inside space-y-2 pl-4">
-                                <li><strong>Age:</strong> Only able to do tutor people 14 and under</li>
-                                <li><strong>Location:</strong> Only able to do jobs in surrounding area</li>
-                                <li><strong>Language:</strong> Only proficiently speaks two languages (American
-                                    English and Konkani), Currently learning Spanish, at Novice High current
-                                    proficiency</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Sandeep Kurma Resume -->
-                    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-                        id="resume-sandeep">
-                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Sandeep Kurma</h2>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic
-                                Skills</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>3.98 GPA overall, with A grades in Algebra, Geometry, Geology, English/Vocabulary,
-                                    American History, Computer Science, and Chemistry (all 8th grade or below)</li>
-                                <li>Communication and critical thinking skills developed through tutoring and group
-                                    projects</li>
-                                <li>Able to break down complex subjects into easy-to-understand lessons</li>
-                                <li>Helps students set goals and master study techniques</li>
-                            </ul>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                                Extracurricular Skills</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Practical problem-solving in graph theory, quadratic equations, and coordinate
-                                    geometry</li>
-                                <li>Prepared answer keys and quizzes for peers, focusing on exam practice</li>
-                            </ul>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                                Availability</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Free most days and times</li>
-                                <li>Can tutor students 13 and under</li>
-                                <li>Willing to tutor in the surrounding local area</li>
-                                <li>English only</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Vivaan Sharma Resume -->
-                    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-                        id="resume-vivaan">
-                        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Vivaan Sharma</h2>
-                        <div class="mb-4 text-gray-300">
-                            <p>Age: 13 years</p>
-                            <p>8th grader at Inglewood Middle School</p>
-                            <p>Student with complete academic and extracurricular resume, skilled in many subjects.
-                            </p>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I
-                                want to tutor</h3>
-                            <p class="text-gray-300">I want to inspire students to constantly learn and grow.</p>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic
-                                Skills</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Member of Inglewood National Junior Honor Society</li>
-                                <li>A+ grade in Science, Leadership, Language Arts, Spanish, Algebra 1, Computer
-                                    Science, and History, all in grades 8 and under</li>
-                                <li>Member of the Associate Student Body, with the role of 8th Grade Representative
-                                </li>
-                                <li>Enrolled in Leadership 2 Class</li>
-                            </ul>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                                Extracurricular Skills</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Experienced in guitar and piano, formerly took classes</li>
-                                <li>On advanced Cricket team, that has was awarded a states qualification</li>
-                                <li>Experienced in Scratch coding(Blocks representing underwritten python code)</li>
-                                <li>Aquired position on Inglewood badminton team, on both Junior Varsity and Varsity
-                                </li>
-                                <li>Bilingual, proficient in English and Hindi</li>
-                            </ul>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                                Availability</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Generally available after school and weekends; may have scheduling conflicts with
-                                    personal classes. Only able to do jobs suitable for age and in surrounding area.
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                                Restrictions</h3>
-                            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                                <li>Age: Tutoring ages 13 and under recommended</li>
-                                <li>Location: Available for opportunities within the local area</li>
-                                <li>Language: Proficient in American English and Hindi, currently learning Assisted
-                                    Sign Language and Spanish</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Kush Billa -->
-            <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-                id="resume-kush">
-                <h2 class="text-3xl font-semibold mb-4 text-gray-100">Kush Billa</h2>
-                <div class="mb-4 text-gray-300">
-                    <p>Age: 13 years</p>
-                    <p>8th grader at Inglewood Middle School</p>
-                    <p>Strong student experienced in multiple fields like music, sports, and robotics with
-                        excellence in academics in addition</p>
-                </div>
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to
-                        tutor</h3>
-                    <p class="text-gray-300">I want to help my peers and be a mentor and learning figure to kids
-                        younger than me, as well as to inspire them.</p>
-                </div>
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic
-                        Skills</h3>
-                    <ul class="list-disc list-inside space-y-1 text-gray-300">
-                        <li>3.9 GPA overall</li>
-                        <li>A+ grade in Science, Geometry, English, US History, Washington History, Robotics, and
-                            Algebra.</li>
-                        <li>Member of National Honor Society</li>
-                    </ul>
-                </div>
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                        Extracurricular Skills</h3>
-                    <ul class="list-disc list-inside space-y-1 text-gray-300">
-                        <li>One year experience in VEX IQ Robotics</li>
-                        <li>Growing Piano player with improving skill</li>
-                        <li>Intermediate Chess player with 2 years experience</li>
-                        <li>Placed 3rd at closed 8-15 years chess tournament</li>
-                        <li>Participating in Math Olympiad for past year</li>
-                        <li>Experienced in block coding</li>
-                        <li>Badminton player on Inglewood team, playing for 4 years</li>
-                        <li>Semester long course in Robotics, passing with an A+ Grade</li>
-                        <li>Trained Leadership skills with two years experience</li>
-                        <li>Elected into associate student body for all three years of middle school</li>
-                        <li>Currently learning Spanish</li>
-                        <li>Currently learning Assisted Sign Language</li>
-                    </ul>
-                </div>
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                        Availability</h3>
-                    <ul class="list-disc list-inside space-y-1 text-gray-300">
-                        <li>Generally available after school and weekends, willing to move personal schedule to
-                            accomodate</li>
-                    </ul>
-                </div>
-                <div class="mb-6">
-                    <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">
-                        Restrictions</h3>
-                    <ul class="list-disc list-inside space-y-1 text-gray-300">
-                        <li>Age: Tutoring ages 13 and under recommended</li>
-                        <li>Location: Available for opportunities within the local area</li>
-                        <li>Language: Proficient in American English, currently learning Spanish</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </div>
+<p class="text-lg text-gray-300 mt-4">
+                    To Contact for Business Inquiries:
+                </p>
+<div class="mt-4 text-gray-300">
+<p class="font-bold">Emails:</p>
+<ul class="list-disc list-inside pl-4">
+<li><a href="mailto:business.adikamath@gmail.com">business.adikamath@gmail.com</a> for business</li>
+<li><a href="mailto:adikamath14@outlook.com">adikamath14@outlook.com</a> (personal)</li>
+<li><a href="mailto:adikamath14@gmail.com">adikamath14@gmail.com</a> (personal)</li>
+</ul>
+</div>
+<div class="mt-4 text-gray-300">
+<p class="font-bold">Phone:</p>
+<ul class="list-disc list-inside pl-4">
+<li>+1-425-283-3244 (Personal)</li>
+<li>+1-408-365-4726 (Parents)</li>
+<li>+1-858-523-8465 (Parents)</li>
+</ul>
 
-    <!-- Krishna Natarajan Resume -->
-    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-        id="resume-krishna">
-        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Krishna Natarajan</h2>
-        <div class="mb-4 text-gray-300">
-            <p>Age: 12 years</p>
-            <p>7th grader at Evergreen Middle School</p>
-            <p>Motivated and well-rounded student with strong academic performance and diverse extracurricular
-                achievements in music, robotics, athletics, and language studies.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor
-            </h3>
-            <p class="text-gray-300">I want to help students in the community not only excel academically but also
-                enjoy learning.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>QUEST (gifted) program student at Evergreen Middle School</li>
-                <li>4.0 GPA overall</li>
-                <li>Won short story competitions organized by Future Scholar</li>
-                <li>Placed on the podium at Math is Cool competitions</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular
-                Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Four years of hands-on robotics experience, advanced to state level in VEX IQ Robotics</li>
-                <li>Intermediate Carnatic violist (3 1/2 years)</li>
-                <li>Western cello player and pianist (3 years each)</li>
-                <li>Active hockey player (competitive experience)</li>
-                <li>Brown belt in Taekwondo</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Generally available after school and weekends; may have scheduling conflicts with personal
-                    classes</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Age: Tutoring ages 12 and under recommended</li>
-                <li>Location: Available for opportunities within the local area</li>
-                <li>Language: Proficient in American English; can understand well but only somewhat speak Tamil
-                </li>
-            </ul>
-        </div>
-    </div>
+</div>
+</div>
+<footer class="footer">
+<p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
+<p><a class="terms-link" href="#">Terms and Conditions</a></p>
+</footer>
+</section>
 
-
-    <!-- Vihan Lekkala Resume -->
-    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-        id="resume-vihan">
-        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Vihan Lekkala</h2>
-        <div class="mb-4 text-gray-300">
-            <p>Age: 13 years</p>
-            <p>8th grader at Inglewood Middle School</p>
-            <p>Motivated and high-performing student with strong academics and diverse extracurricular achievements
-                in sports, music, and language.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor
-            </h3>
-            <p class="text-gray-300">I want to help students in the community be able to pass their classes, enjoy
-                learning, and improve on areas they’re struggling with.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>3.8 GPA overall</li>
-                <li>Consistent member of Science Olympiad at Inglewood Middle School</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular
-                Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Intermediate chess player with 3 years’ experience</li>
-                <li>Experienced basketball player (7 years, Eastlake A team selection for 4 years)</li>
-                <li>Skilled tackle football player (1 year, Eastlake Varsity)</li>
-                <li>Intermediate drum player with 3 years’ experience</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Generally available after school and weekends; may have scheduling conflicts with personal
-                    classes.</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Age: Tutoring ages 13 and under recommended</li>
-                <li>Location: Available for opportunities within the local area</li>
-                <li>Languages: Proficient in American English and Telugu; currently learning Spanish</li>
-            </ul>
-        </div>
-    </div>
-    <!-- Sesha Shreeram Resume -->
-    <div class="resume-content hidden p-6 md:p-8 rounded-xl bg-gray-800 border border-gray-700 transition-all duration-300 text-gray-200"
-        id="resume-sesha">
-        <h2 class="text-3xl font-semibold mb-4 text-gray-100">Sesha Shreeram</h2>
-        <div class="mb-4 text-gray-300">
-            <p>Age: 13 years</p>
-            <p>8th grader at Inglewood Middle School</p>
-            <p>Motivated and well-rounded student with strong academic performance and diverse extracurricular
-                achievements in music, robotics, athletics, and language studies.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Why I want to tutor
-            </h3>
-            <p class="text-gray-300">I want to help students in the community be able to complete their classes,
-                and enjoy them.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Academic Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Student at Inglewood Middle School</li>
-                <li>4.0 GPA overall</li>
-                <li>Qualified for the National Science Bowl in Physics and Chemistry</li>
-                <li>Consistent participator in Science Olympiads</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Extracurricular
-                Skills</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Completed Semester Long Engineering and Design Modelng Course with proficiency in CAD,
-                    Whitebox, Autodesk, and more.</li>
-                <li>Skilled in Python, able to write functional code</li>
-                <li>Advanced Chess Player with 4 years experience</li>
-                <li>Experienced guitar player with 3 years of experience</li>
-                <li>Languages: Fluent in English and Tamil, currently learning French.</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Availability</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Generally available after school and weekends; may have scheduling conflicts with personal
-                    classes.</li>
-                <li>Only able to do jobs suitable for age and in surrounding area.</li>
-            </ul>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-100 border-b-2 border-blue-400 pb-1 mb-2">Restrictions</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-300">
-                <li>Age: Tutoring ages 12 and under recommended</li>
-                <li>Location: Available for opportunities within the local area</li>
-                <li>Language: Proficient in American English; can understand well but only somewhat speak Tamil
-                </li>
-            </ul>
-        </div>
-    </div>
-
-
-    <footer class="footer">
-        <p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
-        <p><a class="terms-link" href="#">Terms and Conditions</a></p>
-    </footer>
-
-    <!-- Pricing Section -->
-    <section class="content-section flex items-center justify-center" id="pricing">
-        <div class="section-content w-full">
-            <h2 class="section-title text-gray-100">Pricing</h2>
-            <p class="text-lg text-gray-300">
-                My standard tutoring rate is $20 per hour.
-            </p>
-            <p class="mt-4 text-lg text-gray-300">
-                However, this can be subject to change based on special circumstances, such as a student's
-                specific needs, the complexity of the subject, or travel distance. I can discuss a custom
-                rate during our initial consultation to ensure it works for everyone.
-            </p>
-        </div>
-        <footer class="footer">
-            <p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
-            <p><a class="terms-link" href="#">Terms and Conditions</a></p>
-        </footer>
-    </section>
-    <!-- Contact Us Section -->
-    <section class="content-section flex items-center justify-center" id="contact">
-        <div class="section-content w-full contact-info">
-            <h2 class="section-title text-gray-100">Contact Us</h2>
-            <p class="text-lg text-gray-300">
-                Requests for tutoring can take up to 72 hours to be responded to.
-            </p>
-            <p class="text-lg text-gray-300 mt-4">
-                To Contact for Business Inquiries:
-            </p>
-            <div class="mt-4 text-gray-300">
-                <p class="font-bold">Emails:</p>
-                <ul class="list-disc list-inside pl-4">
-                    <li><a href="mailto:business.adikamath@gmail.com">business.adikamath@gmail.com</a> for business
-                    </li>
-                    <li><a href="mailto:adikamath14@outlook.com">adikamath14@outlook.com</a> (personal)</li>
-                    <li><a href="mailto:adikamath14@gmail.com">adikamath14@gmail.com</a> (personal)</li>
-                </ul>
-            </div>
-            <div class="mt-4 text-gray-300">
-                <p class="font-bold">Phone:</p>
-                <ul class="list-disc list-inside pl-4">
-                    <li>+1-425-283-3244 (Personal)</li>
-                    <li>+1-408-365-4726 (Parents)</li>
-                    <li>+1-858-523-8465 (Parents)</li>
-                </ul>
-            </div>
-
-            <!-- NEW INQUIRY BUTTON -->
-            <div class="mt-8 text-center">
-                <button id="send-inquiry-btn"
-                    class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg">
-                    Send an Inquiry
-                </button>
-            </div>
-        </div>
-        <footer class="footer">
-            <p>© AK Tutoring LLC, All rights reserved to Aditya Kamath.</p>
-            <p><a class="terms-link" href="#">Terms and Conditions</a></p>
-        </footer>
-    </section>
-
-    <!-- General Text Modal -->
-    <div class="modal" id="text-modal">
-        <div class="modal-content-wrapper">
-            <span class="close-btn">×</span>
-            <div class="modal-content" id="modal-content-area">
-                <!-- Content will be injected here dynamically -->
-            </div>
-        </div>
-    </div>
-    <!-- Quiz Modal -->
-    <div class="modal" id="quiz-modal">
-        <div class="modal-content-wrapper">
-            <span class="close-btn">×</span>
-            <div class="modal-content" id="quiz-modal-content">
-                <!-- Quiz content will be injected here dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW Inquiry Form Modal -->
-    <div class="modal" id="inquiry-modal">
-        <div class="modal-content-wrapper">
-            <span class="close-btn" id="inquiry-modal-close-btn">×</span>
-            <div class="modal-content" id="inquiry-modal-content">
-                <h2 class="section-title text-gray-100" style="margin-bottom: 1.5rem; font-size: 2rem;">Send an
-                    Inquiry</h2>
-                <form id="inquiry-form" class="space-y-4">
-                    <div>
-                        <label for="inquiry-name" class="form-label">Name</label>
-                        <input type="text" id="inquiry-name" name="Name" class="form-input" required>
-                    </div>
-                    <div>
-                        <label for="inquiry-subject" class="form-label">Subject</label>
-                        <input type="text" id="inquiry-subject" name="Subject" class="form-input" required>
-                    </div>
-                    <div>
-                        <label for="inquiry-phone" class="form-label">Phone Number</label>
-                        <input type="tel" id="inquiry-phone" name="Phone" class="form-input"
-                            placeholder="For text response" required>
-                    </div>
-                    <div>
-                        <label for="inquiry-message" class="form-label">Additional Message (Optional)</label>
-                        <textarea id="inquiry-message" name="Message" class="form-input" rows="4"></textarea>
-                    </div>
-                    <div class="text-right pt-4">
-                        <button type="submit"
-                            class="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg">
-                            Submit
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- KamathAI Widget Button -->
-    <button class="widget-button" id="kamath-ai-button">
-        <svg class="feather feather-gemini" fill="none" height="35" stroke="currentColor" stroke-linecap="round"
-            stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="35"
-            xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 12L12 22L22 12L12 2Z" fill="currentColor" stroke="none"></path>
-            <path d="M12 2L12 12L22 12"></path>
-        </svg>
-    </button>
-    <!-- Promo Code Widget Button -->
-    <button class="widget-button" id="promo-code-button">
-        <svg class="feather feather-gift" fill="none" height="32" stroke="currentColor" stroke-linecap="round"
-            stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="32"
-            xmlns="http://www.w3.org/2000/svg">
-            <polyline points="20 12 20 22 4 22 4 12"></polyline>
-            <rect height="5" width="20" x="2" y="7"></rect>
-            <line x1="12" x2="12" y1="22" y2="7"></line>
-            <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"></path>
-            <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"></path>
-        </svg>
-    </button>
-    <!-- KamathAI Widget -->
-    <div class="widget-pop-up" id="kamath-ai-widget">
-        <div class="widget-header">
-            <h3 class="text-xl font-bold">KamathAI</h3>
-            <div class="flex items-center space-x-2">
-                <button class="hidden text-sm text-gray-400" id="kamath-ai-back">Back</button>
-                <button class="text-xl text-gray-400" id="kamath-ai-close">×</button>
-            </div>
-        </div>
-        <div class="flex flex-col flex-grow widget-content-area" id="kamath-ai-content">
-            <div class="flex flex-col flex-grow" id="initial-ai-content">
-                <div class="chat-message-box">
+<!-- General Text Modal -->
+<div class="modal" id="text-modal">
+<div class="modal-content-wrapper">
+<span class="close-btn">×</span>
+<div class="modal-content" id="modal-content-area">
+<!-- Content will be injected here dynamically -->
+</div>
+</div>
+</div>
+<!-- Quiz Modal -->
+<div class="modal" id="quiz-modal">
+<div class="modal-content-wrapper">
+<span class="close-btn">×</span>
+<div class="modal-content" id="quiz-modal-content">
+<!-- Quiz content will be injected here dynamically -->
+</div>
+</div>
+</div>
+<!-- KamathAI Widget Button -->
+<button class="widget-button" id="kamath-ai-button">
+<svg class="feather feather-gemini" fill="none" height="35" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="35" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L2 12L12 22L22 12L12 2Z" fill="currentColor" stroke="none"></path>
+<path d="M12 2L12 12L22 12"></path>
+</svg>
+</button>
+<!-- Promo Code Widget Button -->
+<button class="widget-button" id="promo-code-button">
+<svg class="feather feather-gift" fill="none" height="32" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg">
+<polyline points="20 12 20 22 4 22 4 12"></polyline>
+<rect height="5" width="20" x="2" y="7"></rect>
+<line x1="12" x2="12" y1="22" y2="7"></line>
+<path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"></path>
+<path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"></path>
+</svg>
+</button>
+<!-- KamathAI Widget -->
+<div class="widget-pop-up" id="kamath-ai-widget">
+<div class="widget-header">
+<h3 class="text-xl font-bold">KamathAI</h3>
+<div class="flex items-center space-x-2">
+<button class="hidden text-sm text-gray-400" id="kamath-ai-back">Back</button>
+<button class="text-xl text-gray-400" id="kamath-ai-close">×</button>
+</div>
+</div>
+<div class="flex flex-col flex-grow widget-content-area" id="kamath-ai-content">
+<div class="flex flex-col flex-grow" id="initial-ai-content">
+<div class="chat-message-box">
                     Hello! I'm KamathAI. I can answer your questions about AK Tutoring Co.
                 </div>
-                <div class="flex-grow overflow-y-auto space-y-2 p-2 rounded-lg" id="faq-list">
-                    <h4 class="font-semibold text-sm mb-2 text-gray-400">Popular Questions:</h4>
-                    <button class="faq-button w-full text-left" data-question="pricing">What is your tutoring
-                        pricing?</button>
-                    <button class="faq-button w-full text-left" data-question="subjects">What subjects do you
-                        tutor?</button>
-                    <button class="faq-button w-full text-left" data-question="contact">How can I contact
-                        you?</button>
-                    <button class="faq-button w-full text-left" data-question="qualifications">What are your
-                        qualifications?</button>
-                    <button class="faq-button w-full text-left" data-question="age">Is there an age limit for
-                        students?</button>
-                    <button class="faq-button w-full text-left" data-question="availability">What are your tutoring
-                        hours?</button>
-                </div>
-            </div>
-            <div class="hidden" id="dynamic-ai-content"></div>
-        </div>
-    </div>
-    <!-- Promo Code Widget -->
-    <div class="widget-pop-up" id="promo-code-widget">
-        <div class="widget-header">
-            <h3 class="text-xl font-bold">Promo Codes</h3>
-            <button class="text-xl text-gray-400" id="promo-code-close">×</button>
-        </div>
-        <div class="flex flex-col flex-grow widget-content-area" id="promo-code-content">
-            <div id="promo-code-input-area">
-                <div class="chat-message-box">
+<div class="flex-grow overflow-y-auto space-y-2 p-2 rounded-lg" id="faq-list">
+<h4 class="font-semibold text-sm mb-2 text-gray-400">Popular Questions:</h4>
+<button class="faq-button w-full text-left" data-question="pricing">What is your tutoring pricing?</button>
+<button class="faq-button w-full text-left" data-question="subjects">What subjects do you tutor?</button>
+<button class="faq-button w-full text-left" data-question="contact">How can I contact you?</button>
+<button class="faq-button w-full text-left" data-question="qualifications">What are your qualifications?</button>
+<button class="faq-button w-full text-left" data-question="age">Is there an age limit for students?</button>
+<button class="faq-button w-full text-left" data-question="availability">What are your tutoring hours?</button>
+</div>
+</div>
+<div class="hidden" id="dynamic-ai-content"></div>
+</div>
+</div>
+<!-- Promo Code Widget -->
+<div class="widget-pop-up" id="promo-code-widget">
+<div class="widget-header">
+<h3 class="text-xl font-bold">Promo Codes</h3>
+<button class="text-xl text-gray-400" id="promo-code-close">×</button>
+</div>
+<div class="flex flex-col flex-grow widget-content-area" id="promo-code-content">
+<div id="promo-code-input-area">
+<div class="chat-message-box">
                     Welcome! Enter your 6-digit promo code below.
                 </div>
-                <div class="flex gap-2 items-center" id="promo-code-box">
-                    <input
-                        class="flex-grow w-full text-black px-4 py-2 border rounded-md"
-                        id="promo-code-input" maxlength="6"
-                        oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')"
-                        placeholder="Enter code here..." type="text" />
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded-md"
-                        id="promo-code-submit">Submit</button>
-                </div>
-            </div>
-            <div class="hidden" id="promo-code-dynamic-content"></div>
-        </div>
-    </div>
-    <script>
+<div class="flex gap-2 items-center" id="promo-code-box">
+<input class="flex-grow w-full text-black px-4 py-2 border rounded-md" id="promo-code-input" maxlength="6" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')" placeholder="Enter code here..." type="text"/>
+<button class="bg-blue-500 text-white px-4 py-2 rounded-md" id="promo-code-submit">Submit</button>
+</div>
+</div>
+<div class="hidden" id="promo-code-dynamic-content"></div>
+</div>
+</div>
+<script>
         const navLinks = document.querySelectorAll('.nav-link');
         const contentSections = document.querySelectorAll('.content-section');
         const sectionContents = document.querySelectorAll('.section-content');
@@ -1312,14 +974,6 @@
         const termsLinks = document.querySelectorAll('.terms-link');
         const quizModal = document.getElementById('quiz-modal');
         const quizModalContent = document.getElementById('quiz-modal-content');
-
-        // --- NEW INQUIRY MODAL VARS ---
-        const inquiryModal = document.getElementById('inquiry-modal');
-        const inquiryModalContent = document.getElementById('inquiry-modal-content');
-        const inquiryModalCloseBtn = document.getElementById('inquiry-modal-close-btn');
-        const sendInquiryBtn = document.getElementById('send-inquiry-btn');
-        const inquiryForm = document.getElementById('inquiry-form');
-
 
         // --- Tab switching logic ---
         function showTab(tabId) {
@@ -1335,7 +989,7 @@
         }
 
         navLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tabId = this.getAttribute('data-tab');
                 showTab(tabId);
@@ -1373,7 +1027,7 @@
         `;
 
         sectionContents.forEach(content => {
-            content.addEventListener('click', function (e) {
+            content.addEventListener('click', function(e) {
                 if (this.classList.contains('no-modal')) {
                     return;
                 }
@@ -1395,7 +1049,7 @@
         });
 
         termsLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 textModalContentArea.innerHTML = termsAndConditionsContent;
@@ -1420,90 +1074,9 @@
                 quizModal.style.display = 'none';
                 document.body.classList.remove('modal-open');
             }
-            // --- ADDED FOR INQUIRY MODAL ---
-            if (event.target === inquiryModal) {
-                inquiryModal.style.display = 'none';
-                document.body.classList.remove('modal-open');
-            }
         });
 
         showTab('home');
-
-        // --- NEW INQUIRY MODAL SCRIPT ---
-        if (sendInquiryBtn) {
-            sendInquiryBtn.addEventListener('click', () => {
-                inquiryModal.style.display = 'flex';
-                document.body.classList.add('modal-open');
-            });
-        }
-
-        // Close inquiry modal - already handled by common .close-btn listener
-
-        // Handle Inquiry Form Submission
-        if (inquiryForm) {
-            inquiryForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const submitButton = inquiryForm.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                submitButton.textContent = 'Submitting...';
-
-                const formData = new FormData(inquiryForm);
-                const googleScriptURL = 'https://script.google.com/macros/s/AKfycbwJfENECQBb_rYmBY_AYTaxqt7-EUsGLxVGZ9rzQk4yHRnw6PocwGtyb7eqAeZKw-BEUQ/exec';
-
-                fetch(googleScriptURL, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Network response was not ok: ${response.statusText}`);
-                        }
-                        return response.text();
-                    })
-                    .then(data => {
-                        const modalContentArea = document.getElementById('inquiry-modal-content');
-                        modalContentArea.innerHTML = `
-                        <div class="p-6 text-center">
-                            <h3 class="text-2xl font-bold mb-4">Thank You!</h3>
-                            <p class="text-lg">
-                                Thank you for your inquiry! Please wait up to 72 hours for a response, which will be by text.
-                            </p>
-                            <button class="close-inquiry-modal-btn mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-                                Close
-                            </button>
-                        </div>
-                    `;
-                        // Add listener to the new close button
-                        modalContentArea.querySelector('.close-inquiry-modal-btn').addEventListener('click', () => {
-                            inquiryModal.style.display = 'none';
-                            document.body.classList.remove('modal-open');
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        const modalContentArea = document.getElementById('inquiry-modal-content');
-                        modalContentArea.innerHTML = `
-                        <div class="p-6 text-center">
-                            <h3 class="text-2xl font-bold mb-4 text-red-500">Submission Failed</h3>
-                            <p class="text-lg">
-                                Something went wrong. Please try again later or contact us directly via email.
-                            </p>
-                            <button class="close-inquiry-modal-btn mt-6 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">
-                                Close
-                            </button>
-                        </div>
-                    `;
-                        // Add listener to the new close button
-                        modalContentArea.querySelector('.close-inquiry-modal-btn').addEventListener('click', () => {
-                            inquiryModal.style.display = 'none';
-                            document.body.classList.remove('modal-open');
-                        });
-                    });
-            });
-        }
-        // --- END OF NEW SCRIPT ---
-
 
         // --- KamathAI Widget Logic ---
         const kamathAiButton = document.getElementById('kamath-ai-button');
@@ -1791,7 +1364,7 @@
 
                 const form = document.getElementById('quiz-form');
                 form.addEventListener('submit', handleNextQuestion);
-
+                
                 if (currentQuestionIndex > 0) {
                     document.getElementById('quiz-prev-btn').addEventListener('click', handlePreviousQuestion);
                 }
@@ -1831,7 +1404,7 @@
             });
             showQuizResult(score);
         }
-
+        
         function showQuizResult(score) {
             let resultMessage = '';
             let subtitle = '';
@@ -1893,7 +1466,7 @@
             const selectElement = document.getElementById('tutor-select');
             const selectedValue = selectElement.value;
             const resumeContainers = document.querySelectorAll('.resume-content');
-
+            
             // Hide all resume containers
             resumeContainers.forEach(container => {
                 container.classList.add('hidden');
@@ -1910,202 +1483,143 @@
             }
         }
     </script>
-    <div id="verify-gate">
-        <div class="verify-box">
-            <h1 class="verify-title">We want to preserve what’s human.</h1>
-            <div class="verify-divider"></div>
-            <h2>Verifying you are human</h2>
-            <label class="check-container">
-                <input id="human-check" type="checkbox" />
-                <span class="checkmark"></span>
-                <span class="label-text">I am human</span>
-            </label>
-        </div>
-    </div>
-    <style>
-        /* Background animation */
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
+<div id="verify-gate">
+<div class="verify-box">
+<h1 class="verify-title">We want to preserve what’s human.</h1>
+<div class="verify-divider"></div>
+<h2>Verifying you are human</h2>
+<label class="check-container">
+<input id="human-check" type="checkbox"/>
+<span class="checkmark"></span>
+<span class="label-text">I am human</span>
+</label>
+</div>
+</div>
+<style>
+  /* Background animation */
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-            50% {
-                background-position: 100% 50%;
-            }
+  #verify-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #0a0f24, #142850, #233b6e, #1b2845);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease;
+  }
 
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+  .verify-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border-radius: 22px;
+    padding: 50px 60px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: white;
+    font-family: "Segoe UI", "Inter", sans-serif;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    animation: fadeInBox 1.5s ease;
+  }
 
-        #verify-gate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(-45deg, #0a0f24, #142850, #233b6e, #1b2845);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease;
-        }
+  @keyframes fadeInBox {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
 
-        .verify-box {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            border-radius: 22px;
-            padding: 50px 60px;
-            box-shadow: 0 0 35px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            color: white;
-            font-family: "Segoe UI", "Inter", sans-serif;
-            max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            animation: fadeInBox 1.5s ease;
-        }
+  .verify-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+  }
 
-        @keyframes fadeInBox {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
+  .verify-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin-bottom: 25px;
+  }
 
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
+  .check-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 25px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 10px 20px;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
 
-        .verify-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            letter-spacing: 0.5px;
-        }
+  .check-container:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.02);
+  }
 
-        .verify-divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            margin-bottom: 25px;
-        }
+  input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: #00aaff;
+  }
 
-        .check-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            margin-top: 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px 20px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
+  .label-text {
+    font-size: 18px;
+  }
 
-        .check-container:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
-        }
-
-        input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            accent-color: #00aaff;
-        }
-
-        .label-text {
-            font-size: 18px;
-        }
-
-        body.verified #verify-gate {
-            opacity: 0;
-            pointer-events: none;
-        }
-    </style>
-    <script>
-        // Hide site until verified
-        document.addEventListener("DOMContentLoaded", () => {
-            const gate = document.getElementById("verify-gate");
-            const checkbox = document.getElementById("human-check");
-            document.body.style.overflow = "hidden";
-            checkbox.addEventListener("change", () => {
-                if (checkbox.checked) {
-                    document.body.classList.add("verified");
-                    setTimeout(() => {
-                        gate.remove();
-                        document.body.style.overflow = "auto";
-                    }, 1000);
-                }
-            });
-        });
-    </script>
-    <script>
-        // --- BAREXM Promo Code Handler ---
-        document.addEventListener('DOMContentLoaded', function () {
-            const promoInput = document.getElementById('promo-code-input');
-            if (!promoInput) return;
-            promoInput.addEventListener('keyup', function (e) {
-                if (e.key === 'Enter') checkPromo();
-            });
-            promoInput.addEventListener('change', checkPromo);
-            function checkPromo() {
-                const code = promoInput.value.trim().toUpperCase();
-                if (code === 'BAREXM') {
-                    window.open('hardtutortest.html', '_blank');
-                }
-            }
-        });
-// --- End BAREXM Promo Code Handler ---
-    </script>
-script>
-// --- Modal Functionality for Contact Form ---
-// *** PASTE THIS SCRIPT BLOCK BEFORE THE CLOSING </body> TAG ***
-document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('contact-modal');
-    const openButton = document.getElementById('open-contact-modal');
-    const closeButton = document.getElementById('close-contact-modal');
-
-    const openModal = () => {
-        if (!modal) return;
-        // Add modal-active to show and animate the modal
-        modal.classList.add('modal-active');
-        // Add modal-open to body to disable background scrolling
-        document.body.classList.add('modal-open');
-    };
-
-    const closeModal = () => {
-        if (!modal) return;
-        // Remove classes to hide the modal and re-enable scrolling
-        modal.classList.remove('modal-active');
-        document.body.classList.remove('modal-open');
-    };
-
-    // 1. Open when the button is clicked
-    if (openButton) openButton.addEventListener('click', openModal);
-
-    // 2. Close when the 'X' button is clicked
-    if (closeButton) closeButton.addEventListener('click', closeModal);
-
-    // 3. Close when clicking outside the modal content (on the overlay)
-    if (modal) modal.addEventListener('click', (e) => {
-        // Only close if the click target is the modal container itself
-        if (e.target === modal) {
-            closeModal();
-        }
+  body.verified #verify-gate {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+<script>
+  // Hide site until verified
+  document.addEventListener("DOMContentLoaded", () => {
+    const gate = document.getElementById("verify-gate");
+    const checkbox = document.getElementById("human-check");
+    document.body.style.overflow = "hidden";
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        document.body.classList.add("verified");
+        setTimeout(() => {
+          gate.remove();
+          document.body.style.overflow = "auto";
+        }, 1000);
+      }
     });
-});
+  });
 </script>
-</body>
-
+<script>
+// --- BAREXM Promo Code Handler ---
+document.addEventListener('DOMContentLoaded', function() {
+  const promoInput = document.getElementById('promo-code-input');
+  if (!promoInput) return;
+  promoInput.addEventListener('keyup', function(e) {
+    if (e.key === 'Enter') checkPromo();
+  });
+  promoInput.addEventListener('change', checkPromo);
+  function checkPromo() {
+    const code = promoInput.value.trim().toUpperCase();
+    if (code === 'BAREXM') {
+      window.open('hardtutortest.html', '_blank');
+    }
+  }
+});
+// --- End BAREXM Promo Code Handler ---
+</script></body>
 </html>
-
-
-
-
